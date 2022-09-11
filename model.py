@@ -144,6 +144,7 @@ class Generator(nn.Module):
         """
         # Encode an embedded source
         encode_output = self.encoder(self.src_embed(src), src_length, src_mask)
+        self.embeded_source = self.src_embed(src)
 
         return encode_output
 
@@ -173,6 +174,25 @@ class Generator(nn.Module):
                                src_mask=src_mask,trg_mask=trg_mask)
 
         return decoder_output
+
+    def get_loss_for_batch_detached(self, batch: Batch) \
+            -> Tensor:
+        """
+        Compute non-normalized loss and number of tokens for a batch
+
+        :param batch: batch to compute loss for
+        :param loss_function: loss function, computes for input and target
+            a scalar loss for the complete batch
+        :return: batch_loss: sum of losses over non-pad elements in the batch
+        """
+        # Forward through the batch input
+        skel_out, _ = self.forward(
+            src=batch.src, trg_input=batch.trg_input,
+            src_mask=batch.src_mask, src_lengths=batch.src_lengths,
+            trg_mask=batch.trg_mask).detach()
+
+        # return batch loss = sum over all elements in batch that are not pad
+        return skel_out
 
     def get_loss_for_batch(self, batch: Batch, loss_function: nn.Module) \
             -> Tensor:

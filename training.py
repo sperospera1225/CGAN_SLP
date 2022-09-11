@@ -1,3 +1,4 @@
+from asyncore import write
 import pickle
 import argparse
 from pyexpat import model
@@ -265,10 +266,9 @@ class TrainManager:
         real_label = 1
         fake_label = 0
         
-        # self.criterion = nn.BCELoss
-        
-        # label = torch.FloatTensor(self.batch_size)
-        # one_hot_labels = torch.FloatTensor(self.batch_size, 2)
+        self.criterion = nn.BCELoss # loss function for conditional gan
+        label = torch.FloatTensor(self.batch_size)
+        one_hot_labels = torch.FloatTensor(self.batch_size, 2)
 
         if self.gaussian_noise:
             all_epoch_noise = []
@@ -312,12 +312,13 @@ class TrainManager:
                 # reactivate training
                 
                 self.generator.train()
-
+                self.discriminator.train()
+                
                 # create a Batch object from torchtext batch
                 batch = Batch(torch_batch=batch,
                               pad_index=self.pad_index,
                               model=self.generator)
-
+                
 
                 update = count == 0
                 # Train the model on a batch
@@ -453,20 +454,23 @@ class TrainManager:
         self.logger.info('Best validation result at step %8d: %6.2f %s.',
                          self.best_ckpt_iteration, self.best_ckpt_score,
                          self.early_stopping_metric)
-        
+        self.logger.info('skeleton output file is written!@@@@@@@@@@@@@@@@@@@@@')
         for item in self.skeleton_output:
             for skel in item:
                 f.write(np.array_str(np.array(skel)))
                 f.write('\n')
 
+        self.logger.info('skeleton input file is written!@@@@@@@@@@@@@@@@@@@@@')
         for item in self.skeleton_input:
             for skel in item:
                 f2.write(np.array_str(np.array(skel)))
                 f2.write('\n')
         
+        self.logger.info('gloss file is written!@@@@@@@@@@@@@@@@@@@@@')
         for item in self.gloss_text:
-            f3.write(','.join(item[0]))
-            f3.write('\n')
+            for gloss in item:
+                f3.write(','.join(str(gloss)))
+                f3.write('\n')
 
         f.close()
         f2.close()
@@ -537,6 +541,30 @@ class TrainManager:
 
     # Train the batch
     def _train_batch(self, batch: Batch, update: bool = True) -> Tensor:
+        real_data = batch.trg_input
+        real_label = torch.FloatTensor([1.0, 1.0, 1.0, 1.0, 1.0])
+        
+        # 1 단계: 참에 대해 판별기 훈련
+        output_d_real = self.discriminator(real_data, real_label)
+        self.optimizer_d.zero_grad()
+        errD_real = self.criterion(output_d_real, real_label)
+        errD_real.backward()
+        realD_mean = output_d_real.data.cpu().mean()
+
+        # Get loss from this batch
+        skel_out = self.generator.get_predicted_skel(batch=batch)
+
+        # 2 단계: 거짓에 대해 판별기 훈련
+        # Generator의 기울기가 계산되지 않도록 detach() 함수를 이용
+        fake_data = skel_out
+        fake_label = torch.FloatTensor([0.0, 0.0, 0.0, 0.0, 0.0])
+        
+        output_d_fake = self.discriminator(fake_data, fake_label)
+        errD_fake = self.criterion(output_d_fake, fake_label)
+        fakeD_mean = output_d_fake.data.cpu().mean()
+        errD = errD_real + errD_fake
+        errD_fake.backward()
+        self.optimizer_d.step()
 
         # Get loss from this batch
         batch_loss, noise = self.generator.get_loss_for_batch(
@@ -639,6 +667,12 @@ def train(cfg_file: str, ckpt=None) -> None:
 
     # Train the model
     trainer.train_and_validate(train_data=train_data, valid_data=dev_data)
+
+    file = open('./embeded_source.txt', 'w')
+    for item in generator.embeded_source:
+        for gloss in item:
+            file.write(np.array_str(np.array(gloss)))
+    file.close()
 
     # # Test the model with the best checkpoint
     # test(cfg_file)
