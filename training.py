@@ -1,7 +1,5 @@
-from asyncore import write
 import pickle
 import argparse
-from pyexpat import model
 import time
 import shutil
 import os
@@ -263,12 +261,8 @@ class TrainManager:
                                     train=True, shuffle=self.shuffle)
         
         val_step = 0
-        real_label = 1
-        fake_label = 0
         
         self.criterion = nn.BCELoss # loss function for conditional gan
-        label = torch.FloatTensor(self.batch_size)
-        one_hot_labels = torch.FloatTensor(self.batch_size, 2)
 
         if self.gaussian_noise:
             all_epoch_noise = []
@@ -313,7 +307,7 @@ class TrainManager:
                 
                 self.generator.train()
                 self.discriminator.train()
-                
+
                 # create a Batch object from torchtext batch
                 batch = Batch(torch_batch=batch,
                               pad_index=self.pad_index,
@@ -322,6 +316,7 @@ class TrainManager:
 
                 update = count == 0
                 # Train the model on a batch
+                # Implement the Adversarial training in the _train_batch function
                 batch_loss, noise = self._train_batch(batch, update=update)
                 # If Gaussian Noise, collect the noise
                 if self.gaussian_noise:
@@ -538,10 +533,26 @@ class TrainManager:
                            references=ref_seq_count,
                            skip_frames=self.skip_frames,
                            sequence_ID=sequence_ID)
+    def _pad_along_axis(array: np.ndarray, target_length: int, axis: int = 0) -> np.ndarray:
 
+        pad_size = target_length - array.shape[axis]
+
+        if pad_size <= 0:
+            return array
+
+        npad = [(0, 0)] * array.ndim
+        npad[axis] = (0, pad_size)
+
+        return np.pad(array, pad_width=npad, mode='constant', constant_values=0)
     # Train the batch
     def _train_batch(self, batch: Batch, update: bool = True) -> Tensor:
+
+        source_embedding = self.src_embed(batch.src)
+
         real_data = batch.trg_input
+        # Padding [5, 200, 151]
+        real_data = self._pad_along_axis(real_data, 200, axis = 1)
+        real_data = np.concatenate(real_data, source_embedding, axis=1)
         real_label = torch.FloatTensor([1.0, 1.0, 1.0, 1.0, 1.0])
         
         # 1 단계: 참에 대해 판별기 훈련
@@ -557,6 +568,9 @@ class TrainManager:
         # 2 단계: 거짓에 대해 판별기 훈련
         # Generator의 기울기가 계산되지 않도록 detach() 함수를 이용
         fake_data = skel_out
+        # Padding [5, 200, 151]
+        fake_data = self._pad_along_axis(fake_data, 200, axis = 1)
+        fake_data = np.concatenate(fake_data, source_embedding, axis=1)
         fake_label = torch.FloatTensor([0.0, 0.0, 0.0, 0.0, 0.0])
         
         output_d_fake = self.discriminator(fake_data, fake_label)
@@ -582,6 +596,7 @@ class TrainManager:
         # division needed since loss.backward sums the gradients until updated
         norm_batch_multiply = norm_batch_loss / self.batch_multiplier
 
+        # 3단계: 생성기 훈련
         # compute gradients
         norm_batch_multiply.backward()
 
