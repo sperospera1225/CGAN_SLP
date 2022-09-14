@@ -566,44 +566,91 @@ class TrainManager:
 
         bs = 5
         real_label = torch.full((bs, 1), 1, dtype=torch.float32) #.to(device)
-        
-        # 1 단계: 참에 대해 판별기 훈련
-        output_d_real = self.discriminator(concatenated_data, real_label)
-        self.optimizer_d.zero_grad()
-        self.logger.info(output_d_real)
-
-        output_d_real = output_d_real.ravel()
-        self.logger.info(output_d_real)
-
-        real_label = real_label.ravel()
-        self.logger.info(real_label)
-
-        errD_real = self.criterion(output_d_real, real_label)
-        errD_real.backward()
-        realD_mean = output_d_real.data.cpu().mean()
-
-        # Get loss from this batch
-        skel_out = self.generator.get_predicted_skel(batch=batch)
-
-        # 2 단계: 거짓에 대해 판별기 훈련
-        # Generator의 기울기가 계산되지 않도록 detach() 함수를 이용
-        fake_data = skel_out.detach().numpy()
-
-        self.logger.info(skel_out.shape)
-        fake_data = self._pad_along_axis(array=fake_data, target_length=512, axis=2)
-        fake_data = torch.cat([real_data, source_embedding], dim=1)
-        
-        self.logger.info(concatenated_data.shape)
-        self.logger.info(fake_data.shape)
+        # real_label = real_label.ravel()
 
         fake_label = torch.full((bs, 1), 0, dtype=torch.float32) #.to(device)
-        self.logger.info(fake_data.shape)
-        output_d_fake = self.discriminator(fake_data, fake_label)
-        errD_fake = self.criterion(output_d_fake, fake_label)
-        fakeD_mean = output_d_fake.data.cpu().mean()
-        errD = errD_real + errD_fake
-        errD_fake.backward() # errD.backward()
+        # fake_label = fake_label.ravel()
+
+        # Generator
+        self.generator.zero_grad()
+
+        # 가짜 이미지 생성
+        out_gen = self.generator.get_predicted_skel(batch=batch)
+        out_gen = self._pad_along_axis(array=out_gen.detach().numpy(), target_length=512, axis=2)
+        out_gen = torch.Tensor(out_gen)
+        out_gen = torch.cat([out_gen, source_embedding], dim=1)
+        
+        # 가짜 이미지 판별
+        out_dis = self.discriminator(out_gen, fake_label)
+        # out_dis = out_dis.ravel()
+
+        loss_gen = self.criterion(out_dis, real_label)
+        loss_gen.backward()
+        self.optimizer_g.step()
+
+        # Discriminator
+        self.discriminator.zero_grad()
+        
+        # 진짜 이미지 판별
+        out_dis = self.discriminator(concatenated_data, real_label)
+        loss_real = self.criterion(out_dis, real_label)
+
+        # 가짜 이미지 판별
+        out_dis = self.discriminator(out_gen.detach(), fake_label)
+        loss_fake = self.criterion(out_dis, fake_label)
+
+        loss_dis = (loss_real + loss_fake) / 2
+        # loss_dis.backward(retain_graph=True)
         self.optimizer_d.step()
+
+
+
+
+
+
+        # # 1 단계: 참에 대해 판별기 훈련
+        # output_d_real = self.discriminator(concatenated_data, real_label)
+        # self.optimizer_d.zero_grad()
+        # self.logger.info(output_d_real)
+
+        # output_d_real = output_d_real.ravel()
+        # self.logger.info(output_d_real)
+
+        # real_label = real_label.ravel()
+        # self.logger.info(real_label)
+
+        # errD_real = self.criterion(output_d_real, real_label)
+        # errD_real.backward()
+        # realD_mean = output_d_real.data.cpu().mean()
+
+        # # Get loss from this batch
+        # skel_out = self.generator.get_predicted_skel(batch=batch)
+
+        # # 2 단계: 거짓에 대해 판별기 훈련
+        # # Generator의 기울기가 계산되지 않도록 detach() 함수를 이용
+        # fake_data = skel_out.detach().numpy()
+
+        # self.logger.info(skel_out.shape)
+        # fake_data = self._pad_along_axis(array=fake_data, target_length=512, axis=2)
+        # fake_data = torch.cat([real_data, source_embedding], dim=1)
+        
+        # self.logger.info(concatenated_data.shape)
+        # self.logger.info(fake_data.shape)
+
+        # fake_label = torch.full((bs, 1), 0, dtype=torch.float32) #.to(device)
+        # self.logger.info(fake_data.shape)
+        # output_d_fake = self.discriminator(fake_data, fake_label)
+        # errD_fake = self.criterion(output_d_fake, fake_label)
+        # fakeD_mean = output_d_fake.data.cpu().mean()
+        # errD = errD_real + errD_fake
+        # errD_fake.backward() # errD.backward()
+        # self.optimizer_d.step()
+
+
+
+
+
+
 
         # Get loss from this batch
         batch_loss, noise = self.generator.get_loss_for_batch(
