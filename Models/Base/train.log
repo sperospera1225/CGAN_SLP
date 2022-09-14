@@ -1,75 +1,931 @@
-2022-09-14 20:03:17,993 Progressive Transformers for End-to-End SLP
-2022-09-14 20:03:18,001 Total params: 15427584
-2022-09-14 20:03:18,002 Trainable parameters: ['decoder.layer_norm.bias', 'decoder.layer_norm.weight', 'decoder.layers.0.dec_layer_norm.bias', 'decoder.layers.0.dec_layer_norm.weight', 'decoder.layers.0.feed_forward.layer_norm.bias', 'decoder.layers.0.feed_forward.layer_norm.weight', 'decoder.layers.0.feed_forward.pwff_layer.0.bias', 'decoder.layers.0.feed_forward.pwff_layer.0.weight', 'decoder.layers.0.feed_forward.pwff_layer.3.bias', 'decoder.layers.0.feed_forward.pwff_layer.3.weight', 'decoder.layers.0.src_trg_att.k_layer.bias', 'decoder.layers.0.src_trg_att.k_layer.weight', 'decoder.layers.0.src_trg_att.output_layer.bias', 'decoder.layers.0.src_trg_att.output_layer.weight', 'decoder.layers.0.src_trg_att.q_layer.bias', 'decoder.layers.0.src_trg_att.q_layer.weight', 'decoder.layers.0.src_trg_att.v_layer.bias', 'decoder.layers.0.src_trg_att.v_layer.weight', 'decoder.layers.0.trg_trg_att.k_layer.bias', 'decoder.layers.0.trg_trg_att.k_layer.weight', 'decoder.layers.0.trg_trg_att.output_layer.bias', 'decoder.layers.0.trg_trg_att.output_layer.weight', 'decoder.layers.0.trg_trg_att.q_layer.bias', 'decoder.layers.0.trg_trg_att.q_layer.weight', 'decoder.layers.0.trg_trg_att.v_layer.bias', 'decoder.layers.0.trg_trg_att.v_layer.weight', 'decoder.layers.0.x_layer_norm.bias', 'decoder.layers.0.x_layer_norm.weight', 'decoder.layers.1.dec_layer_norm.bias', 'decoder.layers.1.dec_layer_norm.weight', 'decoder.layers.1.feed_forward.layer_norm.bias', 'decoder.layers.1.feed_forward.layer_norm.weight', 'decoder.layers.1.feed_forward.pwff_layer.0.bias', 'decoder.layers.1.feed_forward.pwff_layer.0.weight', 'decoder.layers.1.feed_forward.pwff_layer.3.bias', 'decoder.layers.1.feed_forward.pwff_layer.3.weight', 'decoder.layers.1.src_trg_att.k_layer.bias', 'decoder.layers.1.src_trg_att.k_layer.weight', 'decoder.layers.1.src_trg_att.output_layer.bias', 'decoder.layers.1.src_trg_att.output_layer.weight', 'decoder.layers.1.src_trg_att.q_layer.bias', 'decoder.layers.1.src_trg_att.q_layer.weight', 'decoder.layers.1.src_trg_att.v_layer.bias', 'decoder.layers.1.src_trg_att.v_layer.weight', 'decoder.layers.1.trg_trg_att.k_layer.bias', 'decoder.layers.1.trg_trg_att.k_layer.weight', 'decoder.layers.1.trg_trg_att.output_layer.bias', 'decoder.layers.1.trg_trg_att.output_layer.weight', 'decoder.layers.1.trg_trg_att.q_layer.bias', 'decoder.layers.1.trg_trg_att.q_layer.weight', 'decoder.layers.1.trg_trg_att.v_layer.bias', 'decoder.layers.1.trg_trg_att.v_layer.weight', 'decoder.layers.1.x_layer_norm.bias', 'decoder.layers.1.x_layer_norm.weight', 'decoder.output_layer.weight', 'encoder.layer_norm.bias', 'encoder.layer_norm.weight', 'encoder.layers.0.feed_forward.layer_norm.bias', 'encoder.layers.0.feed_forward.layer_norm.weight', 'encoder.layers.0.feed_forward.pwff_layer.0.bias', 'encoder.layers.0.feed_forward.pwff_layer.0.weight', 'encoder.layers.0.feed_forward.pwff_layer.3.bias', 'encoder.layers.0.feed_forward.pwff_layer.3.weight', 'encoder.layers.0.layer_norm.bias', 'encoder.layers.0.layer_norm.weight', 'encoder.layers.0.src_src_att.k_layer.bias', 'encoder.layers.0.src_src_att.k_layer.weight', 'encoder.layers.0.src_src_att.output_layer.bias', 'encoder.layers.0.src_src_att.output_layer.weight', 'encoder.layers.0.src_src_att.q_layer.bias', 'encoder.layers.0.src_src_att.q_layer.weight', 'encoder.layers.0.src_src_att.v_layer.bias', 'encoder.layers.0.src_src_att.v_layer.weight', 'encoder.layers.1.feed_forward.layer_norm.bias', 'encoder.layers.1.feed_forward.layer_norm.weight', 'encoder.layers.1.feed_forward.pwff_layer.0.bias', 'encoder.layers.1.feed_forward.pwff_layer.0.weight', 'encoder.layers.1.feed_forward.pwff_layer.3.bias', 'encoder.layers.1.feed_forward.pwff_layer.3.weight', 'encoder.layers.1.layer_norm.bias', 'encoder.layers.1.layer_norm.weight', 'encoder.layers.1.src_src_att.k_layer.bias', 'encoder.layers.1.src_src_att.k_layer.weight', 'encoder.layers.1.src_src_att.output_layer.bias', 'encoder.layers.1.src_src_att.output_layer.weight', 'encoder.layers.1.src_src_att.q_layer.bias', 'encoder.layers.1.src_src_att.q_layer.weight', 'encoder.layers.1.src_src_att.v_layer.bias', 'encoder.layers.1.src_src_att.v_layer.weight', 'src_embed.lut.weight', 'trg_embed.bias', 'trg_embed.weight']
-2022-09-14 20:03:18,006 cfg.data.src                       : gloss
-2022-09-14 20:03:18,006 cfg.data.trg                       : skels
-2022-09-14 20:03:18,006 cfg.data.files                     : files
-2022-09-14 20:03:18,006 cfg.data.train                     : ./Data/tmp/train
-2022-09-14 20:03:18,006 cfg.data.dev                       : ./Data/tmp/dev
-2022-09-14 20:03:18,006 cfg.data.test                      : ./Data/tmp/test
-2022-09-14 20:03:18,006 cfg.data.max_sent_length           : 300
-2022-09-14 20:03:18,006 cfg.data.skip_frames               : 1
-2022-09-14 20:03:18,006 cfg.data.src_vocab                 : ./Configs/src_vocab.txt
-2022-09-14 20:03:18,006 cfg.training.random_seed           : 27
-2022-09-14 20:03:18,006 cfg.training.optimizer             : adam
-2022-09-14 20:03:18,007 cfg.training.learning_rate         : 0.001
-2022-09-14 20:03:18,007 cfg.training.learning_rate_min     : 0.0002
-2022-09-14 20:03:18,007 cfg.training.weight_decay          : 0.0
-2022-09-14 20:03:18,007 cfg.training.clip_grad_norm        : 5.0
-2022-09-14 20:03:18,007 cfg.training.batch_size            : 8
-2022-09-14 20:03:18,007 cfg.training.scheduling            : plateau
-2022-09-14 20:03:18,007 cfg.training.patience              : 7
-2022-09-14 20:03:18,007 cfg.training.decrease_factor       : 0.7
-2022-09-14 20:03:18,007 cfg.training.early_stopping_metric : dtw
-2022-09-14 20:03:18,007 cfg.training.epochs                : 20000
-2022-09-14 20:03:18,007 cfg.training.validation_freq       : 10
-2022-09-14 20:03:18,007 cfg.training.logging_freq          : 250
-2022-09-14 20:03:18,007 cfg.training.eval_metric           : dtw
-2022-09-14 20:03:18,007 cfg.training.model_dir             : ./Models/Base
-2022-09-14 20:03:18,007 cfg.training.overwrite             : True
-2022-09-14 20:03:18,007 cfg.training.continue              : False
-2022-09-14 20:03:18,007 cfg.training.shuffle               : True
-2022-09-14 20:03:18,007 cfg.training.use_cuda              : False
-2022-09-14 20:03:18,008 cfg.training.max_output_length     : 300
-2022-09-14 20:03:18,008 cfg.training.keep_last_ckpts       : 1
-2022-09-14 20:03:18,008 cfg.training.loss                  : MSE
-2022-09-14 20:03:18,008 cfg.model.initializer              : xavier
-2022-09-14 20:03:18,008 cfg.model.bias_initializer         : zeros
-2022-09-14 20:03:18,008 cfg.model.embed_initializer        : xavier
-2022-09-14 20:03:18,008 cfg.model.trg_size                 : 150
-2022-09-14 20:03:18,008 cfg.model.just_count_in            : False
-2022-09-14 20:03:18,008 cfg.model.gaussian_noise           : True
-2022-09-14 20:03:18,008 cfg.model.noise_rate               : 5
-2022-09-14 20:03:18,008 cfg.model.future_prediction        : 0
-2022-09-14 20:03:18,008 cfg.model.encoder.type             : transformer
-2022-09-14 20:03:18,008 cfg.model.encoder.num_layers       : 2
-2022-09-14 20:03:18,008 cfg.model.encoder.num_heads        : 4
-2022-09-14 20:03:18,008 cfg.model.encoder.embeddings.embedding_dim : 512
-2022-09-14 20:03:18,008 cfg.model.encoder.embeddings.dropout : 0.0
-2022-09-14 20:03:18,008 cfg.model.encoder.hidden_size      : 512
-2022-09-14 20:03:18,008 cfg.model.encoder.ff_size          : 2048
-2022-09-14 20:03:18,008 cfg.model.encoder.dropout          : 0.0
-2022-09-14 20:03:18,009 cfg.model.decoder.type             : transformer
-2022-09-14 20:03:18,009 cfg.model.decoder.num_layers       : 2
-2022-09-14 20:03:18,009 cfg.model.decoder.num_heads        : 4
-2022-09-14 20:03:18,009 cfg.model.decoder.embeddings.embedding_dim : 512
-2022-09-14 20:03:18,009 cfg.model.decoder.embeddings.dropout : 0.0
-2022-09-14 20:03:18,009 cfg.model.decoder.hidden_size      : 512
-2022-09-14 20:03:18,009 cfg.model.decoder.ff_size          : 2048
-2022-09-14 20:03:18,009 cfg.model.decoder.dropout          : 0.0
-2022-09-14 20:03:18,009 EPOCH 1
-2022-09-14 20:03:18,040 torch.Size([5, 12, 512])
-2022-09-14 20:03:18,040 torch.Size([5, 184, 151])
-2022-09-14 20:03:18,043 torch.Size([5, 184, 512])
-2022-09-14 20:03:18,044 torch.Size([5, 196, 512])
-2022-09-14 20:03:18,121 tensor([[0.5398],
-        [0.5399],
-        [0.5399],
-        [0.5399],
-        [0.5399]], grad_fn=<SigmoidBackward0>)
-2022-09-14 20:03:18,139 tensor([0.5398, 0.5399, 0.5399, 0.5399, 0.5399], grad_fn=<ViewBackward0>)
-2022-09-14 20:03:18,140 tensor([1., 1., 1., 1., 1.])
-2022-09-14 20:03:18,597 torch.Size([5, 184, 151])
-2022-09-14 20:03:18,602 torch.Size([5, 196, 512])
-2022-09-14 20:03:18,602 torch.Size([5, 196, 512])
-2022-09-14 20:03:18,602 torch.Size([5, 196, 512])
+2022-09-14 21:20:31,549 Progressive Transformers for End-to-End SLP
+2022-09-14 21:20:31,557 Total params: 15427584
+2022-09-14 21:20:31,558 Trainable parameters: ['decoder.layer_norm.bias', 'decoder.layer_norm.weight', 'decoder.layers.0.dec_layer_norm.bias', 'decoder.layers.0.dec_layer_norm.weight', 'decoder.layers.0.feed_forward.layer_norm.bias', 'decoder.layers.0.feed_forward.layer_norm.weight', 'decoder.layers.0.feed_forward.pwff_layer.0.bias', 'decoder.layers.0.feed_forward.pwff_layer.0.weight', 'decoder.layers.0.feed_forward.pwff_layer.3.bias', 'decoder.layers.0.feed_forward.pwff_layer.3.weight', 'decoder.layers.0.src_trg_att.k_layer.bias', 'decoder.layers.0.src_trg_att.k_layer.weight', 'decoder.layers.0.src_trg_att.output_layer.bias', 'decoder.layers.0.src_trg_att.output_layer.weight', 'decoder.layers.0.src_trg_att.q_layer.bias', 'decoder.layers.0.src_trg_att.q_layer.weight', 'decoder.layers.0.src_trg_att.v_layer.bias', 'decoder.layers.0.src_trg_att.v_layer.weight', 'decoder.layers.0.trg_trg_att.k_layer.bias', 'decoder.layers.0.trg_trg_att.k_layer.weight', 'decoder.layers.0.trg_trg_att.output_layer.bias', 'decoder.layers.0.trg_trg_att.output_layer.weight', 'decoder.layers.0.trg_trg_att.q_layer.bias', 'decoder.layers.0.trg_trg_att.q_layer.weight', 'decoder.layers.0.trg_trg_att.v_layer.bias', 'decoder.layers.0.trg_trg_att.v_layer.weight', 'decoder.layers.0.x_layer_norm.bias', 'decoder.layers.0.x_layer_norm.weight', 'decoder.layers.1.dec_layer_norm.bias', 'decoder.layers.1.dec_layer_norm.weight', 'decoder.layers.1.feed_forward.layer_norm.bias', 'decoder.layers.1.feed_forward.layer_norm.weight', 'decoder.layers.1.feed_forward.pwff_layer.0.bias', 'decoder.layers.1.feed_forward.pwff_layer.0.weight', 'decoder.layers.1.feed_forward.pwff_layer.3.bias', 'decoder.layers.1.feed_forward.pwff_layer.3.weight', 'decoder.layers.1.src_trg_att.k_layer.bias', 'decoder.layers.1.src_trg_att.k_layer.weight', 'decoder.layers.1.src_trg_att.output_layer.bias', 'decoder.layers.1.src_trg_att.output_layer.weight', 'decoder.layers.1.src_trg_att.q_layer.bias', 'decoder.layers.1.src_trg_att.q_layer.weight', 'decoder.layers.1.src_trg_att.v_layer.bias', 'decoder.layers.1.src_trg_att.v_layer.weight', 'decoder.layers.1.trg_trg_att.k_layer.bias', 'decoder.layers.1.trg_trg_att.k_layer.weight', 'decoder.layers.1.trg_trg_att.output_layer.bias', 'decoder.layers.1.trg_trg_att.output_layer.weight', 'decoder.layers.1.trg_trg_att.q_layer.bias', 'decoder.layers.1.trg_trg_att.q_layer.weight', 'decoder.layers.1.trg_trg_att.v_layer.bias', 'decoder.layers.1.trg_trg_att.v_layer.weight', 'decoder.layers.1.x_layer_norm.bias', 'decoder.layers.1.x_layer_norm.weight', 'decoder.output_layer.weight', 'encoder.layer_norm.bias', 'encoder.layer_norm.weight', 'encoder.layers.0.feed_forward.layer_norm.bias', 'encoder.layers.0.feed_forward.layer_norm.weight', 'encoder.layers.0.feed_forward.pwff_layer.0.bias', 'encoder.layers.0.feed_forward.pwff_layer.0.weight', 'encoder.layers.0.feed_forward.pwff_layer.3.bias', 'encoder.layers.0.feed_forward.pwff_layer.3.weight', 'encoder.layers.0.layer_norm.bias', 'encoder.layers.0.layer_norm.weight', 'encoder.layers.0.src_src_att.k_layer.bias', 'encoder.layers.0.src_src_att.k_layer.weight', 'encoder.layers.0.src_src_att.output_layer.bias', 'encoder.layers.0.src_src_att.output_layer.weight', 'encoder.layers.0.src_src_att.q_layer.bias', 'encoder.layers.0.src_src_att.q_layer.weight', 'encoder.layers.0.src_src_att.v_layer.bias', 'encoder.layers.0.src_src_att.v_layer.weight', 'encoder.layers.1.feed_forward.layer_norm.bias', 'encoder.layers.1.feed_forward.layer_norm.weight', 'encoder.layers.1.feed_forward.pwff_layer.0.bias', 'encoder.layers.1.feed_forward.pwff_layer.0.weight', 'encoder.layers.1.feed_forward.pwff_layer.3.bias', 'encoder.layers.1.feed_forward.pwff_layer.3.weight', 'encoder.layers.1.layer_norm.bias', 'encoder.layers.1.layer_norm.weight', 'encoder.layers.1.src_src_att.k_layer.bias', 'encoder.layers.1.src_src_att.k_layer.weight', 'encoder.layers.1.src_src_att.output_layer.bias', 'encoder.layers.1.src_src_att.output_layer.weight', 'encoder.layers.1.src_src_att.q_layer.bias', 'encoder.layers.1.src_src_att.q_layer.weight', 'encoder.layers.1.src_src_att.v_layer.bias', 'encoder.layers.1.src_src_att.v_layer.weight', 'src_embed.lut.weight', 'trg_embed.bias', 'trg_embed.weight']
+2022-09-14 21:20:31,561 cfg.data.src                       : gloss
+2022-09-14 21:20:31,561 cfg.data.trg                       : skels
+2022-09-14 21:20:31,561 cfg.data.files                     : files
+2022-09-14 21:20:31,561 cfg.data.train                     : ./Data/tmp/train
+2022-09-14 21:20:31,561 cfg.data.dev                       : ./Data/tmp/dev
+2022-09-14 21:20:31,561 cfg.data.test                      : ./Data/tmp/test
+2022-09-14 21:20:31,561 cfg.data.max_sent_length           : 300
+2022-09-14 21:20:31,561 cfg.data.skip_frames               : 1
+2022-09-14 21:20:31,561 cfg.data.src_vocab                 : ./Configs/src_vocab.txt
+2022-09-14 21:20:31,561 cfg.training.random_seed           : 27
+2022-09-14 21:20:31,561 cfg.training.optimizer             : adam
+2022-09-14 21:20:31,561 cfg.training.learning_rate         : 0.001
+2022-09-14 21:20:31,561 cfg.training.learning_rate_min     : 0.0002
+2022-09-14 21:20:31,561 cfg.training.weight_decay          : 0.0
+2022-09-14 21:20:31,562 cfg.training.clip_grad_norm        : 5.0
+2022-09-14 21:20:31,562 cfg.training.batch_size            : 8
+2022-09-14 21:20:31,562 cfg.training.scheduling            : plateau
+2022-09-14 21:20:31,562 cfg.training.patience              : 7
+2022-09-14 21:20:31,562 cfg.training.decrease_factor       : 0.7
+2022-09-14 21:20:31,562 cfg.training.early_stopping_metric : dtw
+2022-09-14 21:20:31,562 cfg.training.epochs                : 20000
+2022-09-14 21:20:31,562 cfg.training.validation_freq       : 10
+2022-09-14 21:20:31,562 cfg.training.logging_freq          : 250
+2022-09-14 21:20:31,562 cfg.training.eval_metric           : dtw
+2022-09-14 21:20:31,562 cfg.training.model_dir             : ./Models/Base
+2022-09-14 21:20:31,562 cfg.training.overwrite             : True
+2022-09-14 21:20:31,562 cfg.training.continue              : False
+2022-09-14 21:20:31,562 cfg.training.shuffle               : True
+2022-09-14 21:20:31,562 cfg.training.use_cuda              : False
+2022-09-14 21:20:31,562 cfg.training.max_output_length     : 300
+2022-09-14 21:20:31,562 cfg.training.keep_last_ckpts       : 1
+2022-09-14 21:20:31,562 cfg.training.loss                  : MSE
+2022-09-14 21:20:31,563 cfg.model.initializer              : xavier
+2022-09-14 21:20:31,563 cfg.model.bias_initializer         : zeros
+2022-09-14 21:20:31,563 cfg.model.embed_initializer        : xavier
+2022-09-14 21:20:31,563 cfg.model.trg_size                 : 150
+2022-09-14 21:20:31,563 cfg.model.just_count_in            : False
+2022-09-14 21:20:31,563 cfg.model.gaussian_noise           : True
+2022-09-14 21:20:31,563 cfg.model.noise_rate               : 5
+2022-09-14 21:20:31,563 cfg.model.future_prediction        : 0
+2022-09-14 21:20:31,563 cfg.model.encoder.type             : transformer
+2022-09-14 21:20:31,563 cfg.model.encoder.num_layers       : 2
+2022-09-14 21:20:31,563 cfg.model.encoder.num_heads        : 4
+2022-09-14 21:20:31,563 cfg.model.encoder.embeddings.embedding_dim : 512
+2022-09-14 21:20:31,563 cfg.model.encoder.embeddings.dropout : 0.0
+2022-09-14 21:20:31,563 cfg.model.encoder.hidden_size      : 512
+2022-09-14 21:20:31,563 cfg.model.encoder.ff_size          : 2048
+2022-09-14 21:20:31,563 cfg.model.encoder.dropout          : 0.0
+2022-09-14 21:20:31,563 cfg.model.decoder.type             : transformer
+2022-09-14 21:20:31,563 cfg.model.decoder.num_layers       : 2
+2022-09-14 21:20:31,563 cfg.model.decoder.num_heads        : 4
+2022-09-14 21:20:31,563 cfg.model.decoder.embeddings.embedding_dim : 512
+2022-09-14 21:20:31,564 cfg.model.decoder.embeddings.dropout : 0.0
+2022-09-14 21:20:31,564 cfg.model.decoder.hidden_size      : 512
+2022-09-14 21:20:31,564 cfg.model.decoder.ff_size          : 2048
+2022-09-14 21:20:31,564 cfg.model.decoder.dropout          : 0.0
+2022-09-14 21:20:31,565 EPOCH 1
+2022-09-14 21:20:31,594 torch.Size([5, 12, 512])
+2022-09-14 21:20:31,594 torch.Size([5, 184, 151])
+2022-09-14 21:20:31,597 torch.Size([5, 184, 512])
+2022-09-14 21:20:31,598 torch.Size([5, 196, 512])
+2022-09-14 21:20:33,823 Epoch   1: total training loss 0.23210
+2022-09-14 21:20:33,825 EPOCH 2
+2022-09-14 21:20:33,838 torch.Size([5, 12, 512])
+2022-09-14 21:20:33,839 torch.Size([5, 184, 151])
+2022-09-14 21:20:33,840 torch.Size([5, 184, 512])
+2022-09-14 21:20:33,843 torch.Size([5, 196, 512])
+2022-09-14 21:20:35,620 Epoch   2: total training loss 0.53707
+2022-09-14 21:20:35,620 EPOCH 3
+2022-09-14 21:20:35,627 torch.Size([5, 12, 512])
+2022-09-14 21:20:35,627 torch.Size([5, 184, 151])
+2022-09-14 21:20:35,628 torch.Size([5, 184, 512])
+2022-09-14 21:20:35,629 torch.Size([5, 196, 512])
+2022-09-14 21:20:37,037 Epoch   3: total training loss 0.17663
+2022-09-14 21:20:37,037 EPOCH 4
+2022-09-14 21:20:37,047 torch.Size([5, 12, 512])
+2022-09-14 21:20:37,047 torch.Size([5, 184, 151])
+2022-09-14 21:20:37,048 torch.Size([5, 184, 512])
+2022-09-14 21:20:37,049 torch.Size([5, 196, 512])
+2022-09-14 21:20:38,489 Epoch   4: total training loss 0.04594
+2022-09-14 21:20:38,490 EPOCH 5
+2022-09-14 21:20:38,495 torch.Size([5, 12, 512])
+2022-09-14 21:20:38,495 torch.Size([5, 184, 151])
+2022-09-14 21:20:38,497 torch.Size([5, 184, 512])
+2022-09-14 21:20:38,497 torch.Size([5, 196, 512])
+2022-09-14 21:20:40,033 Epoch   5: total training loss 0.02598
+2022-09-14 21:20:40,034 EPOCH 6
+2022-09-14 21:20:40,041 torch.Size([5, 12, 512])
+2022-09-14 21:20:40,041 torch.Size([5, 184, 151])
+2022-09-14 21:20:40,042 torch.Size([5, 184, 512])
+2022-09-14 21:20:40,046 torch.Size([5, 196, 512])
+2022-09-14 21:20:41,439 Epoch   6: total training loss 0.02458
+2022-09-14 21:20:41,440 EPOCH 7
+2022-09-14 21:20:41,444 torch.Size([5, 12, 512])
+2022-09-14 21:20:41,445 torch.Size([5, 184, 151])
+2022-09-14 21:20:41,445 torch.Size([5, 184, 512])
+2022-09-14 21:20:41,446 torch.Size([5, 196, 512])
+2022-09-14 21:20:42,870 Epoch   7: total training loss 0.02026
+2022-09-14 21:20:42,870 EPOCH 8
+2022-09-14 21:20:42,874 torch.Size([5, 12, 512])
+2022-09-14 21:20:42,875 torch.Size([5, 184, 151])
+2022-09-14 21:20:42,875 torch.Size([5, 184, 512])
+2022-09-14 21:20:42,875 torch.Size([5, 196, 512])
+2022-09-14 21:20:44,771 Epoch   8: total training loss 0.01439
+2022-09-14 21:20:44,772 EPOCH 9
+2022-09-14 21:20:44,780 torch.Size([5, 12, 512])
+2022-09-14 21:20:44,780 torch.Size([5, 184, 151])
+2022-09-14 21:20:44,784 torch.Size([5, 184, 512])
+2022-09-14 21:20:44,785 torch.Size([5, 196, 512])
+2022-09-14 21:20:46,569 Epoch   9: total training loss 0.01024
+2022-09-14 21:20:46,570 EPOCH 10
+2022-09-14 21:20:46,585 torch.Size([5, 12, 512])
+2022-09-14 21:20:46,585 torch.Size([5, 184, 151])
+2022-09-14 21:20:46,586 torch.Size([5, 184, 512])
+2022-09-14 21:20:46,587 torch.Size([5, 196, 512])
+2022-09-14 21:21:06,722 Hooray! New best validation result [dtw]!
+2022-09-14 21:21:06,723 Saving new checkpoint.
+2022-09-14 21:21:17,098 Validation result at epoch  10, step       10: Val DTW Score:  23.02, loss:   0.0269,  duration: 28.9487s
+2022-09-14 21:21:17,100 Epoch  10: total training loss 0.00816
+2022-09-14 21:21:17,100 EPOCH 11
+2022-09-14 21:21:17,114 torch.Size([5, 12, 512])
+2022-09-14 21:21:17,114 torch.Size([5, 184, 151])
+2022-09-14 21:21:17,116 torch.Size([5, 184, 512])
+2022-09-14 21:21:17,116 torch.Size([5, 196, 512])
+2022-09-14 21:21:18,686 Epoch  11: total training loss 0.00744
+2022-09-14 21:21:18,687 EPOCH 12
+2022-09-14 21:21:18,692 torch.Size([5, 12, 512])
+2022-09-14 21:21:18,692 torch.Size([5, 184, 151])
+2022-09-14 21:21:18,693 torch.Size([5, 184, 512])
+2022-09-14 21:21:18,693 torch.Size([5, 196, 512])
+2022-09-14 21:21:20,058 Epoch  12: total training loss 0.00737
+2022-09-14 21:21:20,058 EPOCH 13
+2022-09-14 21:21:20,063 torch.Size([5, 12, 512])
+2022-09-14 21:21:20,064 torch.Size([5, 184, 151])
+2022-09-14 21:21:20,064 torch.Size([5, 184, 512])
+2022-09-14 21:21:20,065 torch.Size([5, 196, 512])
+2022-09-14 21:21:21,357 Epoch  13: total training loss 0.00698
+2022-09-14 21:21:21,357 EPOCH 14
+2022-09-14 21:21:21,362 torch.Size([5, 12, 512])
+2022-09-14 21:21:21,362 torch.Size([5, 184, 151])
+2022-09-14 21:21:21,363 torch.Size([5, 184, 512])
+2022-09-14 21:21:21,363 torch.Size([5, 196, 512])
+2022-09-14 21:21:22,610 Epoch  14: total training loss 0.00610
+2022-09-14 21:21:22,610 EPOCH 15
+2022-09-14 21:21:22,615 torch.Size([5, 12, 512])
+2022-09-14 21:21:22,615 torch.Size([5, 184, 151])
+2022-09-14 21:21:22,616 torch.Size([5, 184, 512])
+2022-09-14 21:21:22,616 torch.Size([5, 196, 512])
+2022-09-14 21:21:23,761 Epoch  15: total training loss 0.00517
+2022-09-14 21:21:23,761 EPOCH 16
+2022-09-14 21:21:23,766 torch.Size([5, 12, 512])
+2022-09-14 21:21:23,766 torch.Size([5, 184, 151])
+2022-09-14 21:21:23,767 torch.Size([5, 184, 512])
+2022-09-14 21:21:23,767 torch.Size([5, 196, 512])
+2022-09-14 21:21:24,934 Epoch  16: total training loss 0.00466
+2022-09-14 21:21:24,935 EPOCH 17
+2022-09-14 21:21:24,939 torch.Size([5, 12, 512])
+2022-09-14 21:21:24,940 torch.Size([5, 184, 151])
+2022-09-14 21:21:24,940 torch.Size([5, 184, 512])
+2022-09-14 21:21:24,941 torch.Size([5, 196, 512])
+2022-09-14 21:21:26,119 Epoch  17: total training loss 0.00448
+2022-09-14 21:21:26,120 EPOCH 18
+2022-09-14 21:21:26,125 torch.Size([5, 12, 512])
+2022-09-14 21:21:26,126 torch.Size([5, 184, 151])
+2022-09-14 21:21:26,126 torch.Size([5, 184, 512])
+2022-09-14 21:21:26,127 torch.Size([5, 196, 512])
+2022-09-14 21:21:27,222 Epoch  18: total training loss 0.00429
+2022-09-14 21:21:27,223 EPOCH 19
+2022-09-14 21:21:27,227 torch.Size([5, 12, 512])
+2022-09-14 21:21:27,227 torch.Size([5, 184, 151])
+2022-09-14 21:21:27,228 torch.Size([5, 184, 512])
+2022-09-14 21:21:27,228 torch.Size([5, 196, 512])
+2022-09-14 21:21:28,384 Epoch  19: total training loss 0.00402
+2022-09-14 21:21:28,384 EPOCH 20
+2022-09-14 21:21:28,389 torch.Size([5, 12, 512])
+2022-09-14 21:21:28,389 torch.Size([5, 184, 151])
+2022-09-14 21:21:28,390 torch.Size([5, 184, 512])
+2022-09-14 21:21:28,391 torch.Size([5, 196, 512])
+2022-09-14 21:21:43,728 Hooray! New best validation result [dtw]!
+2022-09-14 21:21:43,728 Saving new checkpoint.
+2022-09-14 21:21:52,459 Validation result at epoch  20, step       20: Val DTW Score:  15.19, loss:   0.0124,  duration: 22.9394s
+2022-09-14 21:21:52,461 Epoch  20: total training loss 0.00381
+2022-09-14 21:21:52,461 EPOCH 21
+2022-09-14 21:21:52,470 torch.Size([5, 12, 512])
+2022-09-14 21:21:52,470 torch.Size([5, 184, 151])
+2022-09-14 21:21:52,471 torch.Size([5, 184, 512])
+2022-09-14 21:21:52,471 torch.Size([5, 196, 512])
+2022-09-14 21:21:53,801 Epoch  21: total training loss 0.00366
+2022-09-14 21:21:53,801 EPOCH 22
+2022-09-14 21:21:53,806 torch.Size([5, 12, 512])
+2022-09-14 21:21:53,806 torch.Size([5, 184, 151])
+2022-09-14 21:21:53,807 torch.Size([5, 184, 512])
+2022-09-14 21:21:53,807 torch.Size([5, 196, 512])
+2022-09-14 21:21:55,184 Epoch  22: total training loss 0.00344
+2022-09-14 21:21:55,185 EPOCH 23
+2022-09-14 21:21:55,190 torch.Size([5, 12, 512])
+2022-09-14 21:21:55,190 torch.Size([5, 184, 151])
+2022-09-14 21:21:55,191 torch.Size([5, 184, 512])
+2022-09-14 21:21:55,191 torch.Size([5, 196, 512])
+2022-09-14 21:21:56,366 Epoch  23: total training loss 0.00322
+2022-09-14 21:21:56,366 EPOCH 24
+2022-09-14 21:21:56,371 torch.Size([5, 12, 512])
+2022-09-14 21:21:56,371 torch.Size([5, 184, 151])
+2022-09-14 21:21:56,372 torch.Size([5, 184, 512])
+2022-09-14 21:21:56,372 torch.Size([5, 196, 512])
+2022-09-14 21:21:57,495 Epoch  24: total training loss 0.00306
+2022-09-14 21:21:57,495 EPOCH 25
+2022-09-14 21:21:57,499 torch.Size([5, 12, 512])
+2022-09-14 21:21:57,499 torch.Size([5, 184, 151])
+2022-09-14 21:21:57,500 torch.Size([5, 184, 512])
+2022-09-14 21:21:57,501 torch.Size([5, 196, 512])
+2022-09-14 21:21:58,646 Epoch  25: total training loss 0.00298
+2022-09-14 21:21:58,646 EPOCH 26
+2022-09-14 21:21:58,653 torch.Size([5, 12, 512])
+2022-09-14 21:21:58,653 torch.Size([5, 184, 151])
+2022-09-14 21:21:58,654 torch.Size([5, 184, 512])
+2022-09-14 21:21:58,654 torch.Size([5, 196, 512])
+2022-09-14 21:21:59,813 Epoch  26: total training loss 0.00294
+2022-09-14 21:21:59,814 EPOCH 27
+2022-09-14 21:21:59,819 torch.Size([5, 12, 512])
+2022-09-14 21:21:59,819 torch.Size([5, 184, 151])
+2022-09-14 21:21:59,820 torch.Size([5, 184, 512])
+2022-09-14 21:21:59,820 torch.Size([5, 196, 512])
+2022-09-14 21:22:01,146 Epoch  27: total training loss 0.00284
+2022-09-14 21:22:01,147 EPOCH 28
+2022-09-14 21:22:01,151 torch.Size([5, 12, 512])
+2022-09-14 21:22:01,152 torch.Size([5, 184, 151])
+2022-09-14 21:22:01,152 torch.Size([5, 184, 512])
+2022-09-14 21:22:01,153 torch.Size([5, 196, 512])
+2022-09-14 21:22:02,435 Epoch  28: total training loss 0.00268
+2022-09-14 21:22:02,435 EPOCH 29
+2022-09-14 21:22:02,440 torch.Size([5, 12, 512])
+2022-09-14 21:22:02,440 torch.Size([5, 184, 151])
+2022-09-14 21:22:02,441 torch.Size([5, 184, 512])
+2022-09-14 21:22:02,441 torch.Size([5, 196, 512])
+2022-09-14 21:22:03,784 Epoch  29: total training loss 0.00261
+2022-09-14 21:22:03,784 EPOCH 30
+2022-09-14 21:22:03,790 torch.Size([5, 12, 512])
+2022-09-14 21:22:03,790 torch.Size([5, 184, 151])
+2022-09-14 21:22:03,790 torch.Size([5, 184, 512])
+2022-09-14 21:22:03,791 torch.Size([5, 196, 512])
+2022-09-14 21:22:19,636 Hooray! New best validation result [dtw]!
+2022-09-14 21:22:19,637 Saving new checkpoint.
+2022-09-14 21:22:28,238 Validation result at epoch  30, step       30: Val DTW Score:  13.36, loss:   0.0099,  duration: 23.0313s
+2022-09-14 21:22:28,240 Epoch  30: total training loss 0.00252
+2022-09-14 21:22:28,240 EPOCH 31
+2022-09-14 21:22:28,250 torch.Size([5, 12, 512])
+2022-09-14 21:22:28,250 torch.Size([5, 184, 151])
+2022-09-14 21:22:28,251 torch.Size([5, 184, 512])
+2022-09-14 21:22:28,251 torch.Size([5, 196, 512])
+2022-09-14 21:22:29,527 Epoch  31: total training loss 0.00248
+2022-09-14 21:22:29,527 EPOCH 32
+2022-09-14 21:22:29,533 torch.Size([5, 12, 512])
+2022-09-14 21:22:29,533 torch.Size([5, 184, 151])
+2022-09-14 21:22:29,534 torch.Size([5, 184, 512])
+2022-09-14 21:22:29,534 torch.Size([5, 196, 512])
+2022-09-14 21:22:30,962 Epoch  32: total training loss 0.00241
+2022-09-14 21:22:30,962 EPOCH 33
+2022-09-14 21:22:30,968 torch.Size([5, 12, 512])
+2022-09-14 21:22:30,968 torch.Size([5, 184, 151])
+2022-09-14 21:22:30,975 torch.Size([5, 184, 512])
+2022-09-14 21:22:30,977 torch.Size([5, 196, 512])
+2022-09-14 21:22:32,301 Epoch  33: total training loss 0.00233
+2022-09-14 21:22:32,301 EPOCH 34
+2022-09-14 21:22:32,306 torch.Size([5, 12, 512])
+2022-09-14 21:22:32,306 torch.Size([5, 184, 151])
+2022-09-14 21:22:32,307 torch.Size([5, 184, 512])
+2022-09-14 21:22:32,307 torch.Size([5, 196, 512])
+2022-09-14 21:22:33,589 Epoch  34: total training loss 0.00229
+2022-09-14 21:22:33,589 EPOCH 35
+2022-09-14 21:22:33,594 torch.Size([5, 12, 512])
+2022-09-14 21:22:33,595 torch.Size([5, 184, 151])
+2022-09-14 21:22:33,595 torch.Size([5, 184, 512])
+2022-09-14 21:22:33,596 torch.Size([5, 196, 512])
+2022-09-14 21:22:34,891 Epoch  35: total training loss 0.00219
+2022-09-14 21:22:34,892 EPOCH 36
+2022-09-14 21:22:34,897 torch.Size([5, 12, 512])
+2022-09-14 21:22:34,897 torch.Size([5, 184, 151])
+2022-09-14 21:22:34,898 torch.Size([5, 184, 512])
+2022-09-14 21:22:34,898 torch.Size([5, 196, 512])
+2022-09-14 21:22:36,132 Epoch  36: total training loss 0.00216
+2022-09-14 21:22:36,132 EPOCH 37
+2022-09-14 21:22:36,137 torch.Size([5, 12, 512])
+2022-09-14 21:22:36,137 torch.Size([5, 184, 151])
+2022-09-14 21:22:36,138 torch.Size([5, 184, 512])
+2022-09-14 21:22:36,138 torch.Size([5, 196, 512])
+2022-09-14 21:22:37,414 Epoch  37: total training loss 0.00212
+2022-09-14 21:22:37,414 EPOCH 38
+2022-09-14 21:22:37,420 torch.Size([5, 12, 512])
+2022-09-14 21:22:37,420 torch.Size([5, 184, 151])
+2022-09-14 21:22:37,421 torch.Size([5, 184, 512])
+2022-09-14 21:22:37,421 torch.Size([5, 196, 512])
+2022-09-14 21:22:38,605 Epoch  38: total training loss 0.00205
+2022-09-14 21:22:38,606 EPOCH 39
+2022-09-14 21:22:38,611 torch.Size([5, 12, 512])
+2022-09-14 21:22:38,611 torch.Size([5, 184, 151])
+2022-09-14 21:22:38,611 torch.Size([5, 184, 512])
+2022-09-14 21:22:38,612 torch.Size([5, 196, 512])
+2022-09-14 21:22:39,740 Epoch  39: total training loss 0.00201
+2022-09-14 21:22:39,740 EPOCH 40
+2022-09-14 21:22:39,745 torch.Size([5, 12, 512])
+2022-09-14 21:22:39,745 torch.Size([5, 184, 151])
+2022-09-14 21:22:39,745 torch.Size([5, 184, 512])
+2022-09-14 21:22:39,746 torch.Size([5, 196, 512])
+2022-09-14 21:22:54,899 Hooray! New best validation result [dtw]!
+2022-09-14 21:22:54,900 Saving new checkpoint.
+2022-09-14 21:23:03,556 Validation result at epoch  40, step       40: Val DTW Score:  12.99, loss:   0.0095,  duration: 22.5305s
+2022-09-14 21:23:03,557 Epoch  40: total training loss 0.00194
+2022-09-14 21:23:03,557 EPOCH 41
+2022-09-14 21:23:03,569 torch.Size([5, 12, 512])
+2022-09-14 21:23:03,569 torch.Size([5, 184, 151])
+2022-09-14 21:23:03,570 torch.Size([5, 184, 512])
+2022-09-14 21:23:03,571 torch.Size([5, 196, 512])
+2022-09-14 21:23:05,316 Epoch  41: total training loss 0.00191
+2022-09-14 21:23:05,317 EPOCH 42
+2022-09-14 21:23:05,322 torch.Size([5, 12, 512])
+2022-09-14 21:23:05,322 torch.Size([5, 184, 151])
+2022-09-14 21:23:05,323 torch.Size([5, 184, 512])
+2022-09-14 21:23:05,323 torch.Size([5, 196, 512])
+2022-09-14 21:23:06,710 Epoch  42: total training loss 0.00189
+2022-09-14 21:23:06,710 EPOCH 43
+2022-09-14 21:23:06,716 torch.Size([5, 12, 512])
+2022-09-14 21:23:06,716 torch.Size([5, 184, 151])
+2022-09-14 21:23:06,716 torch.Size([5, 184, 512])
+2022-09-14 21:23:06,717 torch.Size([5, 196, 512])
+2022-09-14 21:23:07,917 Epoch  43: total training loss 0.00184
+2022-09-14 21:23:07,917 EPOCH 44
+2022-09-14 21:23:07,922 torch.Size([5, 12, 512])
+2022-09-14 21:23:07,922 torch.Size([5, 184, 151])
+2022-09-14 21:23:07,923 torch.Size([5, 184, 512])
+2022-09-14 21:23:07,923 torch.Size([5, 196, 512])
+2022-09-14 21:23:09,113 Epoch  44: total training loss 0.00180
+2022-09-14 21:23:09,113 EPOCH 45
+2022-09-14 21:23:09,118 torch.Size([5, 12, 512])
+2022-09-14 21:23:09,118 torch.Size([5, 184, 151])
+2022-09-14 21:23:09,119 torch.Size([5, 184, 512])
+2022-09-14 21:23:09,119 torch.Size([5, 196, 512])
+2022-09-14 21:23:10,260 Epoch  45: total training loss 0.00176
+2022-09-14 21:23:10,260 EPOCH 46
+2022-09-14 21:23:10,265 torch.Size([5, 12, 512])
+2022-09-14 21:23:10,265 torch.Size([5, 184, 151])
+2022-09-14 21:23:10,266 torch.Size([5, 184, 512])
+2022-09-14 21:23:10,266 torch.Size([5, 196, 512])
+2022-09-14 21:23:11,437 Epoch  46: total training loss 0.00173
+2022-09-14 21:23:11,437 EPOCH 47
+2022-09-14 21:23:11,441 torch.Size([5, 12, 512])
+2022-09-14 21:23:11,442 torch.Size([5, 184, 151])
+2022-09-14 21:23:11,442 torch.Size([5, 184, 512])
+2022-09-14 21:23:11,443 torch.Size([5, 196, 512])
+2022-09-14 21:23:12,603 Epoch  47: total training loss 0.00168
+2022-09-14 21:23:12,603 EPOCH 48
+2022-09-14 21:23:12,607 torch.Size([5, 12, 512])
+2022-09-14 21:23:12,608 torch.Size([5, 184, 151])
+2022-09-14 21:23:12,608 torch.Size([5, 184, 512])
+2022-09-14 21:23:12,609 torch.Size([5, 196, 512])
+2022-09-14 21:23:13,717 Epoch  48: total training loss 0.00168
+2022-09-14 21:23:13,717 EPOCH 49
+2022-09-14 21:23:13,722 torch.Size([5, 12, 512])
+2022-09-14 21:23:13,722 torch.Size([5, 184, 151])
+2022-09-14 21:23:13,722 torch.Size([5, 184, 512])
+2022-09-14 21:23:13,723 torch.Size([5, 196, 512])
+2022-09-14 21:23:14,865 Epoch  49: total training loss 0.00164
+2022-09-14 21:23:14,865 EPOCH 50
+2022-09-14 21:23:14,870 torch.Size([5, 12, 512])
+2022-09-14 21:23:14,870 torch.Size([5, 184, 151])
+2022-09-14 21:23:14,871 torch.Size([5, 184, 512])
+2022-09-14 21:23:14,871 torch.Size([5, 196, 512])
+2022-09-14 21:23:29,467 Hooray! New best validation result [dtw]!
+2022-09-14 21:23:29,468 Saving new checkpoint.
+2022-09-14 21:23:37,743 Validation result at epoch  50, step       50: Val DTW Score:  12.82, loss:   0.0093,  duration: 21.6904s
+2022-09-14 21:23:37,744 Epoch  50: total training loss 0.00161
+2022-09-14 21:23:37,744 EPOCH 51
+2022-09-14 21:23:37,754 torch.Size([5, 12, 512])
+2022-09-14 21:23:37,754 torch.Size([5, 184, 151])
+2022-09-14 21:23:37,755 torch.Size([5, 184, 512])
+2022-09-14 21:23:37,756 torch.Size([5, 196, 512])
+2022-09-14 21:23:39,114 Epoch  51: total training loss 0.00158
+2022-09-14 21:23:39,114 EPOCH 52
+2022-09-14 21:23:39,119 torch.Size([5, 12, 512])
+2022-09-14 21:23:39,120 torch.Size([5, 184, 151])
+2022-09-14 21:23:39,120 torch.Size([5, 184, 512])
+2022-09-14 21:23:39,121 torch.Size([5, 196, 512])
+2022-09-14 21:23:40,345 Epoch  52: total training loss 0.00156
+2022-09-14 21:23:40,345 EPOCH 53
+2022-09-14 21:23:40,350 torch.Size([5, 12, 512])
+2022-09-14 21:23:40,350 torch.Size([5, 184, 151])
+2022-09-14 21:23:40,351 torch.Size([5, 184, 512])
+2022-09-14 21:23:40,351 torch.Size([5, 196, 512])
+2022-09-14 21:23:41,538 Epoch  53: total training loss 0.00153
+2022-09-14 21:23:41,538 EPOCH 54
+2022-09-14 21:23:41,543 torch.Size([5, 12, 512])
+2022-09-14 21:23:41,543 torch.Size([5, 184, 151])
+2022-09-14 21:23:41,544 torch.Size([5, 184, 512])
+2022-09-14 21:23:41,544 torch.Size([5, 196, 512])
+2022-09-14 21:23:42,670 Epoch  54: total training loss 0.00150
+2022-09-14 21:23:42,670 EPOCH 55
+2022-09-14 21:23:42,675 torch.Size([5, 12, 512])
+2022-09-14 21:23:42,675 torch.Size([5, 184, 151])
+2022-09-14 21:23:42,676 torch.Size([5, 184, 512])
+2022-09-14 21:23:42,676 torch.Size([5, 196, 512])
+2022-09-14 21:23:43,997 Epoch  55: total training loss 0.00147
+2022-09-14 21:23:43,998 EPOCH 56
+2022-09-14 21:23:44,003 torch.Size([5, 12, 512])
+2022-09-14 21:23:44,003 torch.Size([5, 184, 151])
+2022-09-14 21:23:44,003 torch.Size([5, 184, 512])
+2022-09-14 21:23:44,004 torch.Size([5, 196, 512])
+2022-09-14 21:23:45,178 Epoch  56: total training loss 0.00146
+2022-09-14 21:23:45,178 EPOCH 57
+2022-09-14 21:23:45,183 torch.Size([5, 12, 512])
+2022-09-14 21:23:45,183 torch.Size([5, 184, 151])
+2022-09-14 21:23:45,184 torch.Size([5, 184, 512])
+2022-09-14 21:23:45,184 torch.Size([5, 196, 512])
+2022-09-14 21:23:46,420 Epoch  57: total training loss 0.00142
+2022-09-14 21:23:46,421 EPOCH 58
+2022-09-14 21:23:46,426 torch.Size([5, 12, 512])
+2022-09-14 21:23:46,426 torch.Size([5, 184, 151])
+2022-09-14 21:23:46,427 torch.Size([5, 184, 512])
+2022-09-14 21:23:46,427 torch.Size([5, 196, 512])
+2022-09-14 21:23:47,553 Epoch  58: total training loss 0.00142
+2022-09-14 21:23:47,553 EPOCH 59
+2022-09-14 21:23:47,559 torch.Size([5, 12, 512])
+2022-09-14 21:23:47,559 torch.Size([5, 184, 151])
+2022-09-14 21:23:47,559 torch.Size([5, 184, 512])
+2022-09-14 21:23:47,560 torch.Size([5, 196, 512])
+2022-09-14 21:23:48,691 Epoch  59: total training loss 0.00140
+2022-09-14 21:23:48,691 EPOCH 60
+2022-09-14 21:23:48,696 torch.Size([5, 12, 512])
+2022-09-14 21:23:48,696 torch.Size([5, 184, 151])
+2022-09-14 21:23:48,696 torch.Size([5, 184, 512])
+2022-09-14 21:23:48,697 torch.Size([5, 196, 512])
+2022-09-14 21:24:05,521 Validation result at epoch  60, step       60: Val DTW Score:  12.84, loss:   0.0093,  duration: 15.5058s
+2022-09-14 21:24:05,522 Epoch  60: total training loss 0.00139
+2022-09-14 21:24:05,522 EPOCH 61
+2022-09-14 21:24:05,532 torch.Size([5, 12, 512])
+2022-09-14 21:24:05,532 torch.Size([5, 184, 151])
+2022-09-14 21:24:05,533 torch.Size([5, 184, 512])
+2022-09-14 21:24:05,534 torch.Size([5, 196, 512])
+2022-09-14 21:24:06,923 Epoch  61: total training loss 0.00136
+2022-09-14 21:24:06,923 EPOCH 62
+2022-09-14 21:24:06,928 torch.Size([5, 12, 512])
+2022-09-14 21:24:06,928 torch.Size([5, 184, 151])
+2022-09-14 21:24:06,929 torch.Size([5, 184, 512])
+2022-09-14 21:24:06,929 torch.Size([5, 196, 512])
+2022-09-14 21:24:08,093 Epoch  62: total training loss 0.00134
+2022-09-14 21:24:08,093 EPOCH 63
+2022-09-14 21:24:08,099 torch.Size([5, 12, 512])
+2022-09-14 21:24:08,099 torch.Size([5, 184, 151])
+2022-09-14 21:24:08,100 torch.Size([5, 184, 512])
+2022-09-14 21:24:08,100 torch.Size([5, 196, 512])
+2022-09-14 21:24:09,239 Epoch  63: total training loss 0.00133
+2022-09-14 21:24:09,239 EPOCH 64
+2022-09-14 21:24:09,244 torch.Size([5, 12, 512])
+2022-09-14 21:24:09,244 torch.Size([5, 184, 151])
+2022-09-14 21:24:09,244 torch.Size([5, 184, 512])
+2022-09-14 21:24:09,245 torch.Size([5, 196, 512])
+2022-09-14 21:24:10,396 Epoch  64: total training loss 0.00131
+2022-09-14 21:24:10,396 EPOCH 65
+2022-09-14 21:24:10,401 torch.Size([5, 12, 512])
+2022-09-14 21:24:10,402 torch.Size([5, 184, 151])
+2022-09-14 21:24:10,402 torch.Size([5, 184, 512])
+2022-09-14 21:24:10,403 torch.Size([5, 196, 512])
+2022-09-14 21:24:11,522 Epoch  65: total training loss 0.00131
+2022-09-14 21:24:11,522 EPOCH 66
+2022-09-14 21:24:11,527 torch.Size([5, 12, 512])
+2022-09-14 21:24:11,527 torch.Size([5, 184, 151])
+2022-09-14 21:24:11,528 torch.Size([5, 184, 512])
+2022-09-14 21:24:11,528 torch.Size([5, 196, 512])
+2022-09-14 21:24:12,664 Epoch  66: total training loss 0.00129
+2022-09-14 21:24:12,664 EPOCH 67
+2022-09-14 21:24:12,668 torch.Size([5, 12, 512])
+2022-09-14 21:24:12,669 torch.Size([5, 184, 151])
+2022-09-14 21:24:12,669 torch.Size([5, 184, 512])
+2022-09-14 21:24:12,669 torch.Size([5, 196, 512])
+2022-09-14 21:24:13,790 Epoch  67: total training loss 0.00127
+2022-09-14 21:24:13,790 EPOCH 68
+2022-09-14 21:24:13,795 torch.Size([5, 12, 512])
+2022-09-14 21:24:13,795 torch.Size([5, 184, 151])
+2022-09-14 21:24:13,796 torch.Size([5, 184, 512])
+2022-09-14 21:24:13,796 torch.Size([5, 196, 512])
+2022-09-14 21:24:15,006 Epoch  68: total training loss 0.00126
+2022-09-14 21:24:15,006 EPOCH 69
+2022-09-14 21:24:15,011 torch.Size([5, 12, 512])
+2022-09-14 21:24:15,011 torch.Size([5, 184, 151])
+2022-09-14 21:24:15,012 torch.Size([5, 184, 512])
+2022-09-14 21:24:15,012 torch.Size([5, 196, 512])
+2022-09-14 21:24:16,204 Epoch  69: total training loss 0.00125
+2022-09-14 21:24:16,204 EPOCH 70
+2022-09-14 21:24:16,210 torch.Size([5, 12, 512])
+2022-09-14 21:24:16,210 torch.Size([5, 184, 151])
+2022-09-14 21:24:16,211 torch.Size([5, 184, 512])
+2022-09-14 21:24:16,211 torch.Size([5, 196, 512])
+2022-09-14 21:24:31,065 Hooray! New best validation result [dtw]!
+2022-09-14 21:24:31,066 Saving new checkpoint.
+2022-09-14 21:24:39,338 Validation result at epoch  70, step       70: Val DTW Score:  12.77, loss:   0.0092,  duration: 21.9137s
+2022-09-14 21:24:39,339 Epoch  70: total training loss 0.00123
+2022-09-14 21:24:39,339 EPOCH 71
+2022-09-14 21:24:39,350 torch.Size([5, 12, 512])
+2022-09-14 21:24:39,351 torch.Size([5, 184, 151])
+2022-09-14 21:24:39,352 torch.Size([5, 184, 512])
+2022-09-14 21:24:39,353 torch.Size([5, 196, 512])
+2022-09-14 21:24:40,782 Epoch  71: total training loss 0.00124
+2022-09-14 21:24:40,782 EPOCH 72
+2022-09-14 21:24:40,787 torch.Size([5, 12, 512])
+2022-09-14 21:24:40,787 torch.Size([5, 184, 151])
+2022-09-14 21:24:40,788 torch.Size([5, 184, 512])
+2022-09-14 21:24:40,788 torch.Size([5, 196, 512])
+2022-09-14 21:24:41,950 Epoch  72: total training loss 0.00121
+2022-09-14 21:24:41,950 EPOCH 73
+2022-09-14 21:24:41,954 torch.Size([5, 12, 512])
+2022-09-14 21:24:41,955 torch.Size([5, 184, 151])
+2022-09-14 21:24:41,955 torch.Size([5, 184, 512])
+2022-09-14 21:24:41,956 torch.Size([5, 196, 512])
+2022-09-14 21:24:43,112 Epoch  73: total training loss 0.00121
+2022-09-14 21:24:43,113 EPOCH 74
+2022-09-14 21:24:43,118 torch.Size([5, 12, 512])
+2022-09-14 21:24:43,118 torch.Size([5, 184, 151])
+2022-09-14 21:24:43,119 torch.Size([5, 184, 512])
+2022-09-14 21:24:43,119 torch.Size([5, 196, 512])
+2022-09-14 21:24:44,239 Epoch  74: total training loss 0.00120
+2022-09-14 21:24:44,239 EPOCH 75
+2022-09-14 21:24:44,244 torch.Size([5, 12, 512])
+2022-09-14 21:24:44,244 torch.Size([5, 184, 151])
+2022-09-14 21:24:44,245 torch.Size([5, 184, 512])
+2022-09-14 21:24:44,245 torch.Size([5, 196, 512])
+2022-09-14 21:24:45,423 Epoch  75: total training loss 0.00119
+2022-09-14 21:24:45,424 EPOCH 76
+2022-09-14 21:24:45,428 torch.Size([5, 12, 512])
+2022-09-14 21:24:45,429 torch.Size([5, 184, 151])
+2022-09-14 21:24:45,429 torch.Size([5, 184, 512])
+2022-09-14 21:24:45,430 torch.Size([5, 196, 512])
+2022-09-14 21:24:46,568 Epoch  76: total training loss 0.00117
+2022-09-14 21:24:46,568 EPOCH 77
+2022-09-14 21:24:46,573 torch.Size([5, 12, 512])
+2022-09-14 21:24:46,573 torch.Size([5, 184, 151])
+2022-09-14 21:24:46,573 torch.Size([5, 184, 512])
+2022-09-14 21:24:46,574 torch.Size([5, 196, 512])
+2022-09-14 21:24:47,682 Epoch  77: total training loss 0.00116
+2022-09-14 21:24:47,682 EPOCH 78
+2022-09-14 21:24:47,687 torch.Size([5, 12, 512])
+2022-09-14 21:24:47,688 torch.Size([5, 184, 151])
+2022-09-14 21:24:47,689 torch.Size([5, 184, 512])
+2022-09-14 21:24:47,689 torch.Size([5, 196, 512])
+2022-09-14 21:24:48,829 Epoch  78: total training loss 0.00115
+2022-09-14 21:24:48,830 EPOCH 79
+2022-09-14 21:24:48,835 torch.Size([5, 12, 512])
+2022-09-14 21:24:48,835 torch.Size([5, 184, 151])
+2022-09-14 21:24:48,836 torch.Size([5, 184, 512])
+2022-09-14 21:24:48,836 torch.Size([5, 196, 512])
+2022-09-14 21:24:49,971 Epoch  79: total training loss 0.00115
+2022-09-14 21:24:49,971 EPOCH 80
+2022-09-14 21:24:49,978 torch.Size([5, 12, 512])
+2022-09-14 21:24:49,978 torch.Size([5, 184, 151])
+2022-09-14 21:24:49,979 torch.Size([5, 184, 512])
+2022-09-14 21:24:49,980 torch.Size([5, 196, 512])
+2022-09-14 21:25:05,308 Hooray! New best validation result [dtw]!
+2022-09-14 21:25:05,309 Saving new checkpoint.
+2022-09-14 21:25:13,575 Validation result at epoch  80, step       80: Val DTW Score:  12.69, loss:   0.0092,  duration: 22.4085s
+2022-09-14 21:25:13,575 Epoch  80: total training loss 0.00115
+2022-09-14 21:25:13,575 EPOCH 81
+2022-09-14 21:25:13,584 torch.Size([5, 12, 512])
+2022-09-14 21:25:13,585 torch.Size([5, 184, 151])
+2022-09-14 21:25:13,586 torch.Size([5, 184, 512])
+2022-09-14 21:25:13,586 torch.Size([5, 196, 512])
+2022-09-14 21:25:14,850 Epoch  81: total training loss 0.00114
+2022-09-14 21:25:14,850 EPOCH 82
+2022-09-14 21:25:14,855 torch.Size([5, 12, 512])
+2022-09-14 21:25:14,856 torch.Size([5, 184, 151])
+2022-09-14 21:25:14,856 torch.Size([5, 184, 512])
+2022-09-14 21:25:14,857 torch.Size([5, 196, 512])
+2022-09-14 21:25:16,047 Epoch  82: total training loss 0.00113
+2022-09-14 21:25:16,047 EPOCH 83
+2022-09-14 21:25:16,052 torch.Size([5, 12, 512])
+2022-09-14 21:25:16,053 torch.Size([5, 184, 151])
+2022-09-14 21:25:16,053 torch.Size([5, 184, 512])
+2022-09-14 21:25:16,054 torch.Size([5, 196, 512])
+2022-09-14 21:25:17,202 Epoch  83: total training loss 0.00113
+2022-09-14 21:25:17,202 EPOCH 84
+2022-09-14 21:25:17,207 torch.Size([5, 12, 512])
+2022-09-14 21:25:17,207 torch.Size([5, 184, 151])
+2022-09-14 21:25:17,207 torch.Size([5, 184, 512])
+2022-09-14 21:25:17,208 torch.Size([5, 196, 512])
+2022-09-14 21:25:18,326 Epoch  84: total training loss 0.00113
+2022-09-14 21:25:18,326 EPOCH 85
+2022-09-14 21:25:18,330 torch.Size([5, 12, 512])
+2022-09-14 21:25:18,331 torch.Size([5, 184, 151])
+2022-09-14 21:25:18,331 torch.Size([5, 184, 512])
+2022-09-14 21:25:18,332 torch.Size([5, 196, 512])
+2022-09-14 21:25:19,454 Epoch  85: total training loss 0.00111
+2022-09-14 21:25:19,455 EPOCH 86
+2022-09-14 21:25:19,459 torch.Size([5, 12, 512])
+2022-09-14 21:25:19,459 torch.Size([5, 184, 151])
+2022-09-14 21:25:19,460 torch.Size([5, 184, 512])
+2022-09-14 21:25:19,460 torch.Size([5, 196, 512])
+2022-09-14 21:25:20,599 Epoch  86: total training loss 0.00111
+2022-09-14 21:25:20,599 EPOCH 87
+2022-09-14 21:25:20,604 torch.Size([5, 12, 512])
+2022-09-14 21:25:20,604 torch.Size([5, 184, 151])
+2022-09-14 21:25:20,604 torch.Size([5, 184, 512])
+2022-09-14 21:25:20,605 torch.Size([5, 196, 512])
+2022-09-14 21:25:21,781 Epoch  87: total training loss 0.00110
+2022-09-14 21:25:21,781 EPOCH 88
+2022-09-14 21:25:21,786 torch.Size([5, 12, 512])
+2022-09-14 21:25:21,787 torch.Size([5, 184, 151])
+2022-09-14 21:25:21,787 torch.Size([5, 184, 512])
+2022-09-14 21:25:21,788 torch.Size([5, 196, 512])
+2022-09-14 21:25:22,939 Epoch  88: total training loss 0.00109
+2022-09-14 21:25:22,940 EPOCH 89
+2022-09-14 21:25:22,944 torch.Size([5, 12, 512])
+2022-09-14 21:25:22,945 torch.Size([5, 184, 151])
+2022-09-14 21:25:22,945 torch.Size([5, 184, 512])
+2022-09-14 21:25:22,946 torch.Size([5, 196, 512])
+2022-09-14 21:25:24,084 Epoch  89: total training loss 0.00109
+2022-09-14 21:25:24,084 EPOCH 90
+2022-09-14 21:25:24,088 torch.Size([5, 12, 512])
+2022-09-14 21:25:24,088 torch.Size([5, 184, 151])
+2022-09-14 21:25:24,089 torch.Size([5, 184, 512])
+2022-09-14 21:25:24,089 torch.Size([5, 196, 512])
+2022-09-14 21:25:38,759 Hooray! New best validation result [dtw]!
+2022-09-14 21:25:38,760 Saving new checkpoint.
+2022-09-14 21:25:47,077 Validation result at epoch  90, step       90: Val DTW Score:  12.69, loss:   0.0091,  duration: 21.7140s
+2022-09-14 21:25:47,078 Epoch  90: total training loss 0.00108
+2022-09-14 21:25:47,078 EPOCH 91
+2022-09-14 21:25:47,088 torch.Size([5, 12, 512])
+2022-09-14 21:25:47,088 torch.Size([5, 184, 151])
+2022-09-14 21:25:47,089 torch.Size([5, 184, 512])
+2022-09-14 21:25:47,090 torch.Size([5, 196, 512])
+2022-09-14 21:25:48,582 Epoch  91: total training loss 0.00107
+2022-09-14 21:25:48,582 EPOCH 92
+2022-09-14 21:25:48,588 torch.Size([5, 12, 512])
+2022-09-14 21:25:48,588 torch.Size([5, 184, 151])
+2022-09-14 21:25:48,589 torch.Size([5, 184, 512])
+2022-09-14 21:25:48,590 torch.Size([5, 196, 512])
+2022-09-14 21:25:49,779 Epoch  92: total training loss 0.00107
+2022-09-14 21:25:49,779 EPOCH 93
+2022-09-14 21:25:49,792 torch.Size([5, 12, 512])
+2022-09-14 21:25:49,792 torch.Size([5, 184, 151])
+2022-09-14 21:25:49,793 torch.Size([5, 184, 512])
+2022-09-14 21:25:49,793 torch.Size([5, 196, 512])
+2022-09-14 21:25:51,214 Epoch  93: total training loss 0.00106
+2022-09-14 21:25:51,215 EPOCH 94
+2022-09-14 21:25:51,229 torch.Size([5, 12, 512])
+2022-09-14 21:25:51,229 torch.Size([5, 184, 151])
+2022-09-14 21:25:51,231 torch.Size([5, 184, 512])
+2022-09-14 21:25:51,231 torch.Size([5, 196, 512])
+2022-09-14 21:25:52,495 Epoch  94: total training loss 0.00108
+2022-09-14 21:25:52,495 EPOCH 95
+2022-09-14 21:25:52,500 torch.Size([5, 12, 512])
+2022-09-14 21:25:52,501 torch.Size([5, 184, 151])
+2022-09-14 21:25:52,501 torch.Size([5, 184, 512])
+2022-09-14 21:25:52,502 torch.Size([5, 196, 512])
+2022-09-14 21:25:53,628 Epoch  95: total training loss 0.00105
+2022-09-14 21:25:53,628 EPOCH 96
+2022-09-14 21:25:53,633 torch.Size([5, 12, 512])
+2022-09-14 21:25:53,633 torch.Size([5, 184, 151])
+2022-09-14 21:25:53,634 torch.Size([5, 184, 512])
+2022-09-14 21:25:53,634 torch.Size([5, 196, 512])
+2022-09-14 21:25:54,782 Epoch  96: total training loss 0.00106
+2022-09-14 21:25:54,782 EPOCH 97
+2022-09-14 21:25:54,787 torch.Size([5, 12, 512])
+2022-09-14 21:25:54,788 torch.Size([5, 184, 151])
+2022-09-14 21:25:54,788 torch.Size([5, 184, 512])
+2022-09-14 21:25:54,789 torch.Size([5, 196, 512])
+2022-09-14 21:25:55,937 Epoch  97: total training loss 0.00106
+2022-09-14 21:25:55,938 EPOCH 98
+2022-09-14 21:25:55,942 torch.Size([5, 12, 512])
+2022-09-14 21:25:55,942 torch.Size([5, 184, 151])
+2022-09-14 21:25:55,943 torch.Size([5, 184, 512])
+2022-09-14 21:25:55,943 torch.Size([5, 196, 512])
+2022-09-14 21:25:57,079 Epoch  98: total training loss 0.00104
+2022-09-14 21:25:57,079 EPOCH 99
+2022-09-14 21:25:57,084 torch.Size([5, 12, 512])
+2022-09-14 21:25:57,084 torch.Size([5, 184, 151])
+2022-09-14 21:25:57,085 torch.Size([5, 184, 512])
+2022-09-14 21:25:57,085 torch.Size([5, 196, 512])
+2022-09-14 21:25:58,226 Epoch  99: total training loss 0.00103
+2022-09-14 21:25:58,226 EPOCH 100
+2022-09-14 21:25:58,231 torch.Size([5, 12, 512])
+2022-09-14 21:25:58,231 torch.Size([5, 184, 151])
+2022-09-14 21:25:58,232 torch.Size([5, 184, 512])
+2022-09-14 21:25:58,232 torch.Size([5, 196, 512])
+2022-09-14 21:26:16,921 Validation result at epoch 100, step      100: Val DTW Score:  12.73, loss:   0.0091,  duration: 17.5541s
+2022-09-14 21:26:16,922 Epoch 100: total training loss 0.00103
+2022-09-14 21:26:16,922 EPOCH 101
+2022-09-14 21:26:16,930 torch.Size([5, 12, 512])
+2022-09-14 21:26:16,930 torch.Size([5, 184, 151])
+2022-09-14 21:26:16,932 torch.Size([5, 184, 512])
+2022-09-14 21:26:16,932 torch.Size([5, 196, 512])
+2022-09-14 21:26:18,409 Epoch 101: total training loss 0.00102
+2022-09-14 21:26:18,409 EPOCH 102
+2022-09-14 21:26:18,415 torch.Size([5, 12, 512])
+2022-09-14 21:26:18,415 torch.Size([5, 184, 151])
+2022-09-14 21:26:18,416 torch.Size([5, 184, 512])
+2022-09-14 21:26:18,416 torch.Size([5, 196, 512])
+2022-09-14 21:26:19,678 Epoch 102: total training loss 0.00102
+2022-09-14 21:26:19,678 EPOCH 103
+2022-09-14 21:26:19,684 torch.Size([5, 12, 512])
+2022-09-14 21:26:19,684 torch.Size([5, 184, 151])
+2022-09-14 21:26:19,685 torch.Size([5, 184, 512])
+2022-09-14 21:26:19,685 torch.Size([5, 196, 512])
+2022-09-14 21:26:20,939 Epoch 103: total training loss 0.00102
+2022-09-14 21:26:20,939 EPOCH 104
+2022-09-14 21:26:20,944 torch.Size([5, 12, 512])
+2022-09-14 21:26:20,944 torch.Size([5, 184, 151])
+2022-09-14 21:26:20,945 torch.Size([5, 184, 512])
+2022-09-14 21:26:20,945 torch.Size([5, 196, 512])
+2022-09-14 21:26:22,213 Epoch 104: total training loss 0.00102
+2022-09-14 21:26:22,213 EPOCH 105
+2022-09-14 21:26:22,217 torch.Size([5, 12, 512])
+2022-09-14 21:26:22,218 torch.Size([5, 184, 151])
+2022-09-14 21:26:22,218 torch.Size([5, 184, 512])
+2022-09-14 21:26:22,218 torch.Size([5, 196, 512])
+2022-09-14 21:26:23,496 Epoch 105: total training loss 0.00103
+2022-09-14 21:26:23,497 EPOCH 106
+2022-09-14 21:26:23,502 torch.Size([5, 12, 512])
+2022-09-14 21:26:23,502 torch.Size([5, 184, 151])
+2022-09-14 21:26:23,502 torch.Size([5, 184, 512])
+2022-09-14 21:26:23,503 torch.Size([5, 196, 512])
+2022-09-14 21:26:24,835 Epoch 106: total training loss 0.00101
+2022-09-14 21:26:24,836 EPOCH 107
+2022-09-14 21:26:24,844 torch.Size([5, 12, 512])
+2022-09-14 21:26:24,844 torch.Size([5, 184, 151])
+2022-09-14 21:26:24,845 torch.Size([5, 184, 512])
+2022-09-14 21:26:24,845 torch.Size([5, 196, 512])
+2022-09-14 21:26:26,189 Epoch 107: total training loss 0.00101
+2022-09-14 21:26:26,189 EPOCH 108
+2022-09-14 21:26:26,194 torch.Size([5, 12, 512])
+2022-09-14 21:26:26,194 torch.Size([5, 184, 151])
+2022-09-14 21:26:26,195 torch.Size([5, 184, 512])
+2022-09-14 21:26:26,195 torch.Size([5, 196, 512])
+2022-09-14 21:26:27,466 Epoch 108: total training loss 0.00100
+2022-09-14 21:26:27,466 EPOCH 109
+2022-09-14 21:26:27,471 torch.Size([5, 12, 512])
+2022-09-14 21:26:27,471 torch.Size([5, 184, 151])
+2022-09-14 21:26:27,472 torch.Size([5, 184, 512])
+2022-09-14 21:26:27,472 torch.Size([5, 196, 512])
+2022-09-14 21:26:28,732 Epoch 109: total training loss 0.00100
+2022-09-14 21:26:28,733 EPOCH 110
+2022-09-14 21:26:28,737 torch.Size([5, 12, 512])
+2022-09-14 21:26:28,738 torch.Size([5, 184, 151])
+2022-09-14 21:26:28,738 torch.Size([5, 184, 512])
+2022-09-14 21:26:28,738 torch.Size([5, 196, 512])
+2022-09-14 21:26:43,721 Hooray! New best validation result [dtw]!
+2022-09-14 21:26:43,722 Saving new checkpoint.
+2022-09-14 21:26:52,495 Validation result at epoch 110, step      110: Val DTW Score:  12.59, loss:   0.0089,  duration: 22.5310s
+2022-09-14 21:26:52,497 Epoch 110: total training loss 0.00100
+2022-09-14 21:26:52,497 EPOCH 111
+2022-09-14 21:26:52,507 torch.Size([5, 12, 512])
+2022-09-14 21:26:52,508 torch.Size([5, 184, 151])
+2022-09-14 21:26:52,510 torch.Size([5, 184, 512])
+2022-09-14 21:26:52,510 torch.Size([5, 196, 512])
+2022-09-14 21:26:53,750 Epoch 111: total training loss 0.00099
+2022-09-14 21:26:53,750 EPOCH 112
+2022-09-14 21:26:53,755 torch.Size([5, 12, 512])
+2022-09-14 21:26:53,755 torch.Size([5, 184, 151])
+2022-09-14 21:26:53,755 torch.Size([5, 184, 512])
+2022-09-14 21:26:53,756 torch.Size([5, 196, 512])
+2022-09-14 21:26:54,946 Epoch 112: total training loss 0.00097
+2022-09-14 21:26:54,946 EPOCH 113
+2022-09-14 21:26:54,951 torch.Size([5, 12, 512])
+2022-09-14 21:26:54,951 torch.Size([5, 184, 151])
+2022-09-14 21:26:54,951 torch.Size([5, 184, 512])
+2022-09-14 21:26:54,952 torch.Size([5, 196, 512])
+2022-09-14 21:26:56,233 Epoch 113: total training loss 0.00099
+2022-09-14 21:26:56,233 EPOCH 114
+2022-09-14 21:26:56,241 torch.Size([5, 12, 512])
+2022-09-14 21:26:56,241 torch.Size([5, 184, 151])
+2022-09-14 21:26:56,242 torch.Size([5, 184, 512])
+2022-09-14 21:26:56,243 torch.Size([5, 196, 512])
+2022-09-14 21:26:57,453 Epoch 114: total training loss 0.00098
+2022-09-14 21:26:57,454 EPOCH 115
+2022-09-14 21:26:57,458 torch.Size([5, 12, 512])
+2022-09-14 21:26:57,458 torch.Size([5, 184, 151])
+2022-09-14 21:26:57,459 torch.Size([5, 184, 512])
+2022-09-14 21:26:57,459 torch.Size([5, 196, 512])
+2022-09-14 21:26:58,658 Epoch 115: total training loss 0.00098
+2022-09-14 21:26:58,659 EPOCH 116
+2022-09-14 21:26:58,664 torch.Size([5, 12, 512])
+2022-09-14 21:26:58,664 torch.Size([5, 184, 151])
+2022-09-14 21:26:58,665 torch.Size([5, 184, 512])
+2022-09-14 21:26:58,666 torch.Size([5, 196, 512])
+2022-09-14 21:26:59,936 Epoch 116: total training loss 0.00099
+2022-09-14 21:26:59,936 EPOCH 117
+2022-09-14 21:26:59,946 torch.Size([5, 12, 512])
+2022-09-14 21:26:59,946 torch.Size([5, 184, 151])
+2022-09-14 21:26:59,947 torch.Size([5, 184, 512])
+2022-09-14 21:26:59,947 torch.Size([5, 196, 512])
+2022-09-14 21:27:01,147 Epoch 117: total training loss 0.00099
+2022-09-14 21:27:01,147 EPOCH 118
+2022-09-14 21:27:01,153 torch.Size([5, 12, 512])
+2022-09-14 21:27:01,153 torch.Size([5, 184, 151])
+2022-09-14 21:27:01,154 torch.Size([5, 184, 512])
+2022-09-14 21:27:01,154 torch.Size([5, 196, 512])
+2022-09-14 21:27:02,338 Epoch 118: total training loss 0.00098
+2022-09-14 21:27:02,339 EPOCH 119
+2022-09-14 21:27:02,343 torch.Size([5, 12, 512])
+2022-09-14 21:27:02,343 torch.Size([5, 184, 151])
+2022-09-14 21:27:02,344 torch.Size([5, 184, 512])
+2022-09-14 21:27:02,344 torch.Size([5, 196, 512])
+2022-09-14 21:27:03,552 Epoch 119: total training loss 0.00097
+2022-09-14 21:27:03,552 EPOCH 120
+2022-09-14 21:27:03,557 torch.Size([5, 12, 512])
+2022-09-14 21:27:03,557 torch.Size([5, 184, 151])
+2022-09-14 21:27:03,558 torch.Size([5, 184, 512])
+2022-09-14 21:27:03,558 torch.Size([5, 196, 512])
+2022-09-14 21:27:18,779 Hooray! New best validation result [dtw]!
+2022-09-14 21:27:18,780 Saving new checkpoint.
+2022-09-14 21:27:27,463 Validation result at epoch 120, step      120: Val DTW Score:  12.53, loss:   0.0087,  duration: 22.5529s
+2022-09-14 21:27:27,464 Epoch 120: total training loss 0.00096
+2022-09-14 21:27:27,464 EPOCH 121
+2022-09-14 21:27:27,475 torch.Size([5, 12, 512])
+2022-09-14 21:27:27,475 torch.Size([5, 184, 151])
+2022-09-14 21:27:27,477 torch.Size([5, 184, 512])
+2022-09-14 21:27:27,478 torch.Size([5, 196, 512])
+2022-09-14 21:27:28,858 Epoch 121: total training loss 0.00097
+2022-09-14 21:27:28,859 EPOCH 122
+2022-09-14 21:27:28,864 torch.Size([5, 12, 512])
+2022-09-14 21:27:28,864 torch.Size([5, 184, 151])
+2022-09-14 21:27:28,864 torch.Size([5, 184, 512])
+2022-09-14 21:27:28,865 torch.Size([5, 196, 512])
+2022-09-14 21:27:30,093 Epoch 122: total training loss 0.00096
+2022-09-14 21:27:30,093 EPOCH 123
+2022-09-14 21:27:30,098 torch.Size([5, 12, 512])
+2022-09-14 21:27:30,098 torch.Size([5, 184, 151])
+2022-09-14 21:27:30,098 torch.Size([5, 184, 512])
+2022-09-14 21:27:30,099 torch.Size([5, 196, 512])
+2022-09-14 21:27:31,379 Epoch 123: total training loss 0.00096
+2022-09-14 21:27:31,379 EPOCH 124
+2022-09-14 21:27:31,383 torch.Size([5, 12, 512])
+2022-09-14 21:27:31,384 torch.Size([5, 184, 151])
+2022-09-14 21:27:31,384 torch.Size([5, 184, 512])
+2022-09-14 21:27:31,385 torch.Size([5, 196, 512])
+2022-09-14 21:27:32,566 Epoch 124: total training loss 0.00095
+2022-09-14 21:27:32,566 EPOCH 125
+2022-09-14 21:27:32,571 torch.Size([5, 12, 512])
+2022-09-14 21:27:32,571 torch.Size([5, 184, 151])
+2022-09-14 21:27:32,572 torch.Size([5, 184, 512])
+2022-09-14 21:27:32,572 torch.Size([5, 196, 512])
+2022-09-14 21:27:33,692 Epoch 125: total training loss 0.00095
+2022-09-14 21:27:33,693 EPOCH 126
+2022-09-14 21:27:33,697 torch.Size([5, 12, 512])
+2022-09-14 21:27:33,697 torch.Size([5, 184, 151])
+2022-09-14 21:27:33,698 torch.Size([5, 184, 512])
+2022-09-14 21:27:33,698 torch.Size([5, 196, 512])
+2022-09-14 21:27:34,835 Epoch 126: total training loss 0.00096
+2022-09-14 21:27:34,835 EPOCH 127
+2022-09-14 21:27:34,840 torch.Size([5, 12, 512])
+2022-09-14 21:27:34,840 torch.Size([5, 184, 151])
+2022-09-14 21:27:34,841 torch.Size([5, 184, 512])
+2022-09-14 21:27:34,841 torch.Size([5, 196, 512])
+2022-09-14 21:27:35,968 Epoch 127: total training loss 0.00096
+2022-09-14 21:27:35,969 EPOCH 128
+2022-09-14 21:27:35,973 torch.Size([5, 12, 512])
+2022-09-14 21:27:35,973 torch.Size([5, 184, 151])
+2022-09-14 21:27:35,974 torch.Size([5, 184, 512])
+2022-09-14 21:27:35,974 torch.Size([5, 196, 512])
+2022-09-14 21:27:37,101 Epoch 128: total training loss 0.00094
+2022-09-14 21:27:37,101 EPOCH 129
+2022-09-14 21:27:37,106 torch.Size([5, 12, 512])
+2022-09-14 21:27:37,106 torch.Size([5, 184, 151])
+2022-09-14 21:27:37,107 torch.Size([5, 184, 512])
+2022-09-14 21:27:37,107 torch.Size([5, 196, 512])
+2022-09-14 21:27:38,498 Epoch 129: total training loss 0.00094
+2022-09-14 21:27:38,498 EPOCH 130
+2022-09-14 21:27:38,513 torch.Size([5, 12, 512])
+2022-09-14 21:27:38,513 torch.Size([5, 184, 151])
+2022-09-14 21:27:38,514 torch.Size([5, 184, 512])
+2022-09-14 21:27:38,515 torch.Size([5, 196, 512])
+2022-09-14 21:27:55,372 Validation result at epoch 130, step      130: Val DTW Score:  12.62, loss:   0.0088,  duration: 15.6426s
+2022-09-14 21:27:55,373 Epoch 130: total training loss 0.00094
+2022-09-14 21:27:55,374 EPOCH 131
+2022-09-14 21:27:55,383 torch.Size([5, 12, 512])
+2022-09-14 21:27:55,384 torch.Size([5, 184, 151])
+2022-09-14 21:27:55,385 torch.Size([5, 184, 512])
+2022-09-14 21:27:55,385 torch.Size([5, 196, 512])
+2022-09-14 21:27:56,720 Epoch 131: total training loss 0.00093
+2022-09-14 21:27:56,721 EPOCH 132
+2022-09-14 21:27:56,726 torch.Size([5, 12, 512])
+2022-09-14 21:27:56,726 torch.Size([5, 184, 151])
+2022-09-14 21:27:56,727 torch.Size([5, 184, 512])
+2022-09-14 21:27:56,727 torch.Size([5, 196, 512])
+2022-09-14 21:27:58,121 Epoch 132: total training loss 0.00093
+2022-09-14 21:27:58,121 EPOCH 133
+2022-09-14 21:27:58,126 torch.Size([5, 12, 512])
+2022-09-14 21:27:58,126 torch.Size([5, 184, 151])
+2022-09-14 21:27:58,127 torch.Size([5, 184, 512])
+2022-09-14 21:27:58,127 torch.Size([5, 196, 512])
+2022-09-14 21:27:59,376 Epoch 133: total training loss 0.00093
+2022-09-14 21:27:59,376 EPOCH 134
+2022-09-14 21:27:59,382 torch.Size([5, 12, 512])
+2022-09-14 21:27:59,382 torch.Size([5, 184, 151])
+2022-09-14 21:27:59,383 torch.Size([5, 184, 512])
+2022-09-14 21:27:59,383 torch.Size([5, 196, 512])
+2022-09-14 21:28:00,590 Epoch 134: total training loss 0.00093
+2022-09-14 21:28:00,591 EPOCH 135
+2022-09-14 21:28:00,595 torch.Size([5, 12, 512])
+2022-09-14 21:28:00,595 torch.Size([5, 184, 151])
+2022-09-14 21:28:00,596 torch.Size([5, 184, 512])
+2022-09-14 21:28:00,596 torch.Size([5, 196, 512])
+2022-09-14 21:28:01,767 Epoch 135: total training loss 0.00093
+2022-09-14 21:28:01,768 EPOCH 136
+2022-09-14 21:28:01,772 torch.Size([5, 12, 512])
+2022-09-14 21:28:01,772 torch.Size([5, 184, 151])
+2022-09-14 21:28:01,773 torch.Size([5, 184, 512])
+2022-09-14 21:28:01,773 torch.Size([5, 196, 512])
+2022-09-14 21:28:03,022 Epoch 136: total training loss 0.00091
+2022-09-14 21:28:03,023 EPOCH 137
+2022-09-14 21:28:03,027 torch.Size([5, 12, 512])
+2022-09-14 21:28:03,027 torch.Size([5, 184, 151])
+2022-09-14 21:28:03,028 torch.Size([5, 184, 512])
+2022-09-14 21:28:03,029 torch.Size([5, 196, 512])
+2022-09-14 21:28:04,601 Epoch 137: total training loss 0.00093
+2022-09-14 21:28:04,601 EPOCH 138
+2022-09-14 21:28:04,607 torch.Size([5, 12, 512])
+2022-09-14 21:28:04,607 torch.Size([5, 184, 151])
+2022-09-14 21:28:04,608 torch.Size([5, 184, 512])
+2022-09-14 21:28:04,608 torch.Size([5, 196, 512])
+2022-09-14 21:28:06,175 Epoch 138: total training loss 0.00092
+2022-09-14 21:28:06,176 EPOCH 139
+2022-09-14 21:28:06,184 torch.Size([5, 12, 512])
+2022-09-14 21:28:06,184 torch.Size([5, 184, 151])
+2022-09-14 21:28:06,186 torch.Size([5, 184, 512])
+2022-09-14 21:28:06,188 torch.Size([5, 196, 512])
+2022-09-14 21:28:07,724 Epoch 139: total training loss 0.00091
+2022-09-14 21:28:07,725 EPOCH 140
+2022-09-14 21:28:07,736 torch.Size([5, 12, 512])
+2022-09-14 21:28:07,736 torch.Size([5, 184, 151])
+2022-09-14 21:28:07,739 torch.Size([5, 184, 512])
+2022-09-14 21:28:07,740 torch.Size([5, 196, 512])
