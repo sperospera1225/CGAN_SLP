@@ -175,7 +175,7 @@ class Generator(nn.Module):
 
         return decoder_output
 
-    def get_loss_for_batch_detached(self, batch: Batch) \
+    def get_predicted_skel(self, batch: Batch) \
             -> Tensor:
         """
         Compute non-normalized loss and number of tokens for a batch
@@ -189,7 +189,7 @@ class Generator(nn.Module):
         skel_out, _ = self.forward(
             src=batch.src, trg_input=batch.trg_input,
             src_mask=batch.src_mask, src_lengths=batch.src_lengths,
-            trg_mask=batch.trg_mask).detach()
+            trg_mask=batch.trg_mask)
 
         # return batch loss = sum over all elements in batch that are not pad
         return skel_out
@@ -278,32 +278,31 @@ class Discriminator(nn.Module):
     """
     Sign pose is concatenated with source spoken language, and projected to signel scalar(real/fake)
     """
-
+    """
+    torch.nn.Conv2d(
+        in_channels, out_channels, 
+        kernel_size, stride=1, 
+        padding=0, dilation=1, 
+        groups=1, bias=True, 
+        padding_mode='zeros', device=None, dtype=None)
+    """
     def __init__(self) -> None:
         super(Discriminator, self).__init__()
-        self.conv1 = nn.Conv2d(1, 32, 5, 1, 2)
-        self.bn1 = nn.BatchNorm2d(32)
-        self.conv2 = nn.Conv2d(32, 64, 5, 1, 2)
-        self.bn2 = nn.BatchNorm2d(64)
-        self.fc1  = nn.Linear(64*28*28+100, 1024)
-        self.fc2 = nn.Linear(1024, 1)
-        self.fc3 = nn.Linear(10, 100) # (embedding_dimension, max_length)
+        self.conv1 = nn.Conv1d(in_channels=512, out_channels=16, kernel_size=3, stride=1, padding=1)
+        self.conv2 = nn.Conv1d(in_channels=16, out_channels=32, kernel_size=3, stride=1, padding=1)
+        self.lstm = nn.LSTM(input_size=32, hidden_size=50, num_layers=1, bias=True, bidirectional=False, batch_first=True)
+        self.fc1 = nn.Linear(50, 32)
+        self.fc2 = nn.Linear(32, 1)
 
     def forward(self, x, labels):
-        batch_size = x.size(0)
-        x = x.view(batch_size, 1, 28,28)
+        x = x.transpose(1, 2)
         x = self.conv1(x)
-        x = self.bn1(x)
-        x = F.relu(x)
         x = self.conv2(x)
-        x = self.bn2(x)
-        x = F.relu(x)
-        x = x.view(batch_size, 64*28*28)
-        y_ = self.fc3(labels)
-        y_ = F.relu(y_)
-        x = torch.cat([x, y_], 1)
+        x = x.transpose(1, 2)
+        self.lstm.flatten_parameters()
+        _, (hidden, _) = self.lstm(x)
+        x = hidden[-1]
         x = self.fc1(x)
-        x = F.relu(x)
         x = self.fc2(x)
         return F.sigmoid(x)
 

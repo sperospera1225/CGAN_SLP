@@ -262,7 +262,7 @@ class TrainManager:
         
         val_step = 0
         
-        self.criterion = nn.BCELoss # loss function for conditional gan
+        self.criterion = nn.BCELoss() # loss function for conditional gan
 
         if self.gaussian_noise:
             all_epoch_noise = []
@@ -533,7 +533,8 @@ class TrainManager:
                            references=ref_seq_count,
                            skip_frames=self.skip_frames,
                            sequence_ID=sequence_ID)
-    def _pad_along_axis(array: np.ndarray, target_length: int, axis: int = 0) -> np.ndarray:
+
+    def _pad_along_axis(self, array: np.ndarray, target_length: int, axis: int = 0) -> np.ndarray:
 
         pad_size = target_length - array.shape[axis]
 
@@ -547,17 +548,36 @@ class TrainManager:
     # Train the batch
     def _train_batch(self, batch: Batch, update: bool = True) -> Tensor:
 
-        source_embedding = self.src_embed(batch.src)
+        source_embedding = self.generator.src_embed(batch.src)
+        self.logger.info(source_embedding.shape)
 
+        # [5, 184, 151]
         real_data = batch.trg_input
+        self.logger.info(real_data.shape)
+
         # Padding [5, 200, 151]
-        real_data = self._pad_along_axis(real_data, 200, axis = 1)
-        real_data = np.concatenate(real_data, source_embedding, axis=1)
-        real_label = torch.FloatTensor([1.0, 1.0, 1.0, 1.0, 1.0])
+        real_data = self._pad_along_axis(array=real_data, target_length=512, axis=2)
+        real_data = torch.Tensor(real_data)
+        self.logger.info(real_data.shape)
+
+        concatenated_data = torch.cat([real_data, source_embedding], dim=1)
+        # real_data = np.concatenate(real_data, source_embedding)
+        self.logger.info(concatenated_data.shape)
+
+        bs = 5
+        real_label = torch.full((bs, 1), 1, dtype=torch.float32) #.to(device)
         
         # 1 단계: 참에 대해 판별기 훈련
-        output_d_real = self.discriminator(real_data, real_label)
+        output_d_real = self.discriminator(concatenated_data, real_label)
         self.optimizer_d.zero_grad()
+        self.logger.info(output_d_real)
+
+        output_d_real = output_d_real.ravel()
+        self.logger.info(output_d_real)
+
+        real_label = real_label.ravel()
+        self.logger.info(real_label)
+
         errD_real = self.criterion(output_d_real, real_label)
         errD_real.backward()
         realD_mean = output_d_real.data.cpu().mean()
@@ -567,17 +587,22 @@ class TrainManager:
 
         # 2 단계: 거짓에 대해 판별기 훈련
         # Generator의 기울기가 계산되지 않도록 detach() 함수를 이용
-        fake_data = skel_out
-        # Padding [5, 200, 151]
-        fake_data = self._pad_along_axis(fake_data, 200, axis = 1)
-        fake_data = np.concatenate(fake_data, source_embedding, axis=1)
-        fake_label = torch.FloatTensor([0.0, 0.0, 0.0, 0.0, 0.0])
+        fake_data = skel_out.detach().numpy()
+
+        self.logger.info(skel_out.shape)
+        fake_data = self._pad_along_axis(array=fake_data, target_length=512, axis=2)
+        fake_data = torch.cat([real_data, source_embedding], dim=1)
         
+        self.logger.info(concatenated_data.shape)
+        self.logger.info(fake_data.shape)
+
+        fake_label = torch.full((bs, 1), 0, dtype=torch.float32) #.to(device)
+        self.logger.info(fake_data.shape)
         output_d_fake = self.discriminator(fake_data, fake_label)
         errD_fake = self.criterion(output_d_fake, fake_label)
         fakeD_mean = output_d_fake.data.cpu().mean()
         errD = errD_real + errD_fake
-        errD_fake.backward()
+        errD_fake.backward() # errD.backward()
         self.optimizer_d.step()
 
         # Get loss from this batch
