@@ -1,3 +1,8 @@
+# Implementing adversarial training based on Conditional GAN. 
+## The base code is cited from the Source code for "Progressive Transformers for End-to-End Sign Language Production" (Ben Saunders, Necati Cihan Camgoz, Richard Bowden - ECCV 2020) 
+
+
+
 # Progressive Transformers for End-to-End Sign Language Production
 
 Source code for "Progressive Transformers for End-to-End Sign Language Production" (Ben Saunders, Necati Cihan Camgoz, Richard Bowden - ECCV 2020) 
