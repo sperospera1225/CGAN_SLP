@@ -14,6 +14,7 @@ from constants import UNK_TOKEN, PAD_TOKEN, EOS_TOKEN
 
 # Validate epoch given a dataset
 def validate_on_data(model: Generator,
+                     discriminator: Discriminator,
                      data: Dataset,
                      batch_size: int,
                      max_output_length: int,
@@ -42,6 +43,8 @@ def validate_on_data(model: Generator,
         total_ntokens = 0
         total_nseqs = 0
 
+        label = torch.full((5, 1), 1, dtype=torch.float32)
+
         batches = 0
         for valid_batch in iter(valid_iter):
             # Extract batch
@@ -54,7 +57,7 @@ def validate_on_data(model: Generator,
             if loss_function is not None and batch.trg is not None:
                 # Get the loss for this batch
                 batch_loss, _ = model.get_loss_for_batch(
-                    batch, loss_function=loss_function)
+                    batch, loss_function=loss_function, label=label, discriminator=discriminator)
 
                 valid_loss += batch_loss
                 total_ntokens += batch.ntokens

@@ -20,6 +20,38 @@ import torch.optim as optim
 import torch.nn.functional as F
 
 
+class Discriminator(nn.Module):
+    """
+    Sign pose is concatenated with source spoken language, and projected to signel scalar(real/fake)
+    """
+    """
+    torch.nn.Conv2d(
+        in_channels, out_channels, 
+        kernel_size, stride=1, 
+        padding=0, dilation=1, 
+        groups=1, bias=True, 
+        padding_mode='zeros', device=None, dtype=None)
+    """
+    def __init__(self) -> None:
+        super(Discriminator, self).__init__()
+        self.conv1 = nn.Conv1d(in_channels=512, out_channels=16, kernel_size=3, stride=1, padding=1)
+        self.conv2 = nn.Conv1d(in_channels=16, out_channels=32, kernel_size=3, stride=1, padding=1)
+        self.lstm = nn.LSTM(input_size=32, hidden_size=50, num_layers=1, bias=True, bidirectional=False, batch_first=True)
+        self.fc1 = nn.Linear(50, 32)
+        self.fc2 = nn.Linear(32, 1)
+
+    def forward(self, x):
+        x = x.transpose(1, 2)
+        x = self.conv1(x)
+        x = self.conv2(x)
+        x = x.transpose(1, 2)
+        self.lstm.flatten_parameters()
+        _, (hidden, _) = self.lstm(x)
+        x = hidden[-1]
+        x = self.fc1(x)
+        x = self.fc2(x)
+        return F.sigmoid(x)
+
 class Generator(nn.Module):
     """
     Text to SignPose
@@ -194,7 +226,8 @@ class Generator(nn.Module):
         # return batch loss = sum over all elements in batch that are not pad
         return skel_out
 
-    def get_loss_for_batch(self, batch: Batch, loss_function: nn.Module) \
+
+    def get_loss_for_batch(self, batch: Batch, loss_function: nn.Module, label, discriminator: Discriminator) \
             -> Tensor:
         """
         Compute non-normalized loss and number of tokens for a batch
@@ -209,10 +242,16 @@ class Generator(nn.Module):
             src=batch.src, trg_input=batch.trg_input,
             src_mask=batch.src_mask, src_lengths=batch.src_lengths,
             trg_mask=batch.trg_mask)
+        
+        skel_out = torch.nn.functional.pad(skel_out, (0, 361), "constant", 0)
+
+        source_embedding = self.src_embed(batch.src)
+        concatenated_data = torch.cat([skel_out, source_embedding], dim=1)
+        out_dis = discriminator(concatenated_data)
 
         # compute batch loss using skel_out and the batch target
-        batch_loss = loss_function(skel_out, batch.trg)
-
+        batch_loss = loss_function(out_dis, label)
+        
         # If gaussian noise, find the noise for the next epoch
         if self.gaussian_noise:
             # Calculate the difference between prediction and GT, to find STDs of error
@@ -273,38 +312,6 @@ class Generator(nn.Module):
                "\tsrc_embed=%s,\n" \
                "\ttrg_embed=%s)" % (self.__class__.__name__, self.encoder,
                    self.decoder, self.src_embed, self.trg_embed)
-
-class Discriminator(nn.Module):
-    """
-    Sign pose is concatenated with source spoken language, and projected to signel scalar(real/fake)
-    """
-    """
-    torch.nn.Conv2d(
-        in_channels, out_channels, 
-        kernel_size, stride=1, 
-        padding=0, dilation=1, 
-        groups=1, bias=True, 
-        padding_mode='zeros', device=None, dtype=None)
-    """
-    def __init__(self) -> None:
-        super(Discriminator, self).__init__()
-        self.conv1 = nn.Conv1d(in_channels=512, out_channels=16, kernel_size=3, stride=1, padding=1)
-        self.conv2 = nn.Conv1d(in_channels=16, out_channels=32, kernel_size=3, stride=1, padding=1)
-        self.lstm = nn.LSTM(input_size=32, hidden_size=50, num_layers=1, bias=True, bidirectional=False, batch_first=True)
-        self.fc1 = nn.Linear(50, 32)
-        self.fc2 = nn.Linear(32, 1)
-
-    def forward(self, x, labels):
-        x = x.transpose(1, 2)
-        x = self.conv1(x)
-        x = self.conv2(x)
-        x = x.transpose(1, 2)
-        self.lstm.flatten_parameters()
-        _, (hidden, _) = self.lstm(x)
-        x = hidden[-1]
-        x = self.fc1(x)
-        x = self.fc2(x)
-        return F.sigmoid(x)
 
 
 def build_model(cfg: dict = None,

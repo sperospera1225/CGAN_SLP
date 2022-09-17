@@ -60,9 +60,11 @@ class TrainManager:
         self._log_parameters_list()
         self.target_pad = TARGET_PAD
 
+        self.adversarial_loss = nn.BCELoss() # loss function for conditional gan
+
         # New Regression loss - depending on config
-        self.loss = RegLoss(cfg = config,
-                            target_pad=self.target_pad)
+        # self.loss = RegLoss(cfg = config,
+        #                     target_pad=self.target_pad)
 
         self.normalization = "batch"
 
@@ -121,7 +123,7 @@ class TrainManager:
         if self.use_cuda:
             self.generator.cuda()
             self.discriminator.cuda()
-            self.loss.cuda()
+            self.adversarial_loss.cuda()
 
         # initialize training statistics
         self.steps = 0
@@ -261,8 +263,6 @@ class TrainManager:
                                     train=True, shuffle=self.shuffle)
         
         val_step = 0
-        
-        self.criterion = nn.BCELoss() # loss function for conditional gan
 
         if self.gaussian_noise:
             all_epoch_noise = []
@@ -305,8 +305,8 @@ class TrainManager:
             for batch in iter(train_iter):
                 # reactivate training
                 
-                self.generator.train()
-                self.discriminator.train()
+                # self.generator.train()
+                # self.discriminator.train()
 
                 # create a Batch object from torchtext batch
                 batch = Batch(torch_batch=batch,
@@ -317,6 +317,7 @@ class TrainManager:
                 update = count == 0
                 # Train the model on a batch
                 # Implement the Adversarial training in the _train_batch function
+
                 batch_loss, noise = self._train_batch(batch, update=update)
                 # If Gaussian Noise, collect the noise
                 if self.gaussian_noise:
@@ -355,12 +356,13 @@ class TrainManager:
                     valid_score, valid_loss, valid_references, valid_hypotheses, \
                         valid_inputs, all_dtw_scores, valid_file_paths = \
                         validate_on_data(
+                            discriminator=self.discriminator,
                             batch_size=self.eval_batch_size,
                             data=valid_data,
                             eval_metric=self.eval_metric,
                             model=self.generator,
                             max_output_length=self.max_output_length,
-                            loss_function=self.loss,
+                            loss_function=self.adversarial_loss,
                             batch_type=self.eval_batch_type,
                             type="val",
                         )
@@ -549,112 +551,65 @@ class TrainManager:
     def _train_batch(self, batch: Batch, update: bool = True) -> Tensor:
 
         source_embedding = self.generator.src_embed(batch.src)
-        self.logger.info(source_embedding.shape)
+        self.logger.info(source_embedding.shape) # spoken language sequence
 
-        # [5, 184, 151]
-        real_data = batch.trg_input
-        self.logger.info(real_data.shape)
-
-        # Padding [5, 200, 151]
+        # [5, 184, 151] -> [5, 184, 512]
+        real_data = batch.trg # batch.trg_input?
+        self.logger.info(real_data.shape) #ground-truth sign pose equence
         real_data = self._pad_along_axis(array=real_data, target_length=512, axis=2)
         real_data = torch.Tensor(real_data)
         self.logger.info(real_data.shape)
 
-        concatenated_data = torch.cat([real_data, source_embedding], dim=1)
+        concatenated_real_data = torch.cat([real_data, source_embedding], dim=1)
         # real_data = np.concatenate(real_data, source_embedding)
-        self.logger.info(concatenated_data.shape)
-
-        bs = 5
-        real_label = torch.full((bs, 1), 1, dtype=torch.float32) #.to(device)
-        # real_label = real_label.ravel()
-
-        fake_label = torch.full((bs, 1), 0, dtype=torch.float32) #.to(device)
-        # fake_label = fake_label.ravel()
-
-        # Generator
-        self.generator.zero_grad()
+        self.logger.info(concatenated_real_data.shape)
 
         # 가짜 이미지 생성
-        out_gen = self.generator.get_predicted_skel(batch=batch)
-        out_gen = self._pad_along_axis(array=out_gen.detach().numpy(), target_length=512, axis=2)
-        out_gen = torch.Tensor(out_gen)
-        out_gen = torch.cat([out_gen, source_embedding], dim=1)
+        fake_data = self.generator.get_predicted_skel(batch=batch)
+        fake_data = fake_data.detach().numpy()
+        fake_data = self._pad_along_axis(array=fake_data, target_length=512, axis=2)
+        fake_data = torch.Tensor(fake_data)
+        concatenated_fake_data = torch.cat([fake_data, source_embedding], dim=1)
+        self.logger.info(concatenated_fake_data.shape)
+
+        bs = 5
+        if self.use_cuda:
+            real_label = torch.full((bs, 1), 1, dtype=torch.float32).cuda()
+            fake_label = torch.full((bs, 1), 0, dtype=torch.float32).cuda()
+        else:
+            real_label = torch.full((bs, 1), 1, dtype=torch.float32)
+            fake_label = torch.full((bs, 1), 0, dtype=torch.float32)
+            # real_label = real_label.ravel()
+            # fake_label = fake_label.ravel()
         
-        # 가짜 이미지 판별
-        out_dis = self.discriminator(out_gen, fake_label)
-        # out_dis = out_dis.ravel()
+        # ---------------------
+        #  Train Discriminator
+        # ---------------------
+        self.optimizer_d.zero_grad()
 
-        loss_gen = self.criterion(out_dis, real_label)
-        loss_gen.backward()
-        self.optimizer_g.step()
+        # Loss for real data
+        out_dis_real = self.discriminator(concatenated_real_data)
+        loss_real = self.adversarial_loss(out_dis_real, real_label)
 
-        # Discriminator
-        self.discriminator.zero_grad()
-        
-        # 진짜 이미지 판별
-        out_dis = self.discriminator(concatenated_data, real_label)
-        loss_real = self.criterion(out_dis, real_label)
+        # Loss for fake data
+        out_dis_fake = self.discriminator(concatenated_fake_data)
+        loss_fake = self.adversarial_loss(out_dis_fake, fake_label)
 
-        # 가짜 이미지 판별
-        out_dis = self.discriminator(out_gen.detach(), fake_label)
-        loss_fake = self.criterion(out_dis, fake_label)
-
-        loss_dis = (loss_real + loss_fake) / 2
-        # loss_dis.backward(retain_graph=True)
+        loss_dis = (loss_real + loss_fake).mean()
+        loss_dis.backward()
         self.optimizer_d.step()
 
-
-
-
-
-
-        # # 1 단계: 참에 대해 판별기 훈련
-        # output_d_real = self.discriminator(concatenated_data, real_label)
-        # self.optimizer_d.zero_grad()
-        # self.logger.info(output_d_real)
-
-        # output_d_real = output_d_real.ravel()
-        # self.logger.info(output_d_real)
-
-        # real_label = real_label.ravel()
-        # self.logger.info(real_label)
-
-        # errD_real = self.criterion(output_d_real, real_label)
-        # errD_real.backward()
-        # realD_mean = output_d_real.data.cpu().mean()
-
-        # # Get loss from this batch
-        # skel_out = self.generator.get_predicted_skel(batch=batch)
-
-        # # 2 단계: 거짓에 대해 판별기 훈련
-        # # Generator의 기울기가 계산되지 않도록 detach() 함수를 이용
-        # fake_data = skel_out.detach().numpy()
-
-        # self.logger.info(skel_out.shape)
-        # fake_data = self._pad_along_axis(array=fake_data, target_length=512, axis=2)
-        # fake_data = torch.cat([real_data, source_embedding], dim=1)
-        
-        # self.logger.info(concatenated_data.shape)
-        # self.logger.info(fake_data.shape)
-
-        # fake_label = torch.full((bs, 1), 0, dtype=torch.float32) #.to(device)
-        # self.logger.info(fake_data.shape)
-        # output_d_fake = self.discriminator(fake_data, fake_label)
-        # errD_fake = self.criterion(output_d_fake, fake_label)
-        # fakeD_mean = output_d_fake.data.cpu().mean()
-        # errD = errD_real + errD_fake
-        # errD_fake.backward() # errD.backward()
-        # self.optimizer_d.step()
-
-
-
-
-
-
+        # self.logger.info(batch.trg)
+        # self.logger.info(batch.trg_input)
+        # ---------------------
+        #  Train Generator
+        # ---------------------
+        self.optimizer_g.zero_grad()
 
         # Get loss from this batch
         batch_loss, noise = self.generator.get_loss_for_batch(
-            batch=batch, loss_function=self.loss)
+                                    batch=batch, loss_function=self.adversarial_loss, 
+                                    label=real_label, discriminator=self.discriminator)
 
         # normalize batch loss
         if self.normalization == "batch":
@@ -679,13 +634,16 @@ class TrainManager:
         if update:
             # make gradient step
             self.optimizer_g.step()
-            self.optimizer_g.zero_grad()
+            # self.optimizer_g.zero_grad()
 
             # increment step counter
             self.steps += 1
 
         # increment token counter
         self.total_tokens += batch.ntokens
+        
+
+        # 최종적으로 
 
         return norm_batch_loss, noise
 
@@ -733,7 +691,7 @@ def train(cfg_file: str, ckpt=None) -> None:
     # Load the data - Trg as (batch, # of frames, joints + 1 )
     train_data, dev_data, test_data, src_vocab, trg_vocab = load_data(cfg=cfg)
 
-    # Build the Progressive Transformer model
+    # Initialize Generator and discriminator
     generator = build_model(cfg, src_vocab=src_vocab, trg_vocab=trg_vocab)
     discriminator = Discriminator()
 
@@ -802,6 +760,8 @@ def test(cfg_file,
     # Build model and load parameters into it
     model = build_model(cfg, src_vocab=src_vocab, trg_vocab=trg_vocab)
     model.load_state_dict(model_checkpoint["model_g_state"])
+    discriminator = Discriminator()
+
     # If cuda, set model as cuda
     if use_cuda:
         model.cuda()
@@ -816,7 +776,8 @@ def test(cfg_file,
         score, loss, references, hypotheses, \
         inputs, all_dtw_scores, file_paths = \
             validate_on_data(
-                model=model,
+                model=model,                            
+                discriminator=discriminator,
                 data=data_set,
                 batch_size=batch_size,
                 max_output_length=max_output_length,
