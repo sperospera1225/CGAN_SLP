@@ -244,10 +244,11 @@ class Generator(nn.Module):
             trg_mask=batch.trg_mask)
         
         skel_out = torch.nn.functional.pad(skel_out, (0, 361), "constant", 0)
-
+        print(skel_out.shape,'@@@@@@@@@@@@@@@@@@@@@@@@@@')
         source_embedding = self.src_embed(batch.src)
         concatenated_data = torch.cat([skel_out, source_embedding], dim=1)
-        out_dis = discriminator(concatenated_data)
+        out_dis = discriminator.forward(concatenated_data)
+        # out_dis = discriminator(concatenated_data)
 
         # compute batch loss using skel_out and the batch target
         batch_loss = loss_function(out_dis, label)

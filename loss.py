@@ -19,6 +19,8 @@ class RegLoss(nn.Module):
             self.criterion = nn.L1Loss()
         elif self.loss == "mse":
             self.criterion = nn.MSELoss()
+        elif self.loss == "bce":
+            self.criterion = nn.BCELoss()
 
         else:
             print("Loss not found - revert to default L1 loss")
@@ -39,11 +41,11 @@ class RegLoss(nn.Module):
         targets_masked = targets * loss_mask
 
         # Calculate loss just over the masked predictions
-        loss = self.criterion(preds_masked, targets_masked)
+        loss = self.criterion(preds, targets)
 
         # Multiply loss by the loss scale
-        if self.loss_scale != 1.0:
-            loss = loss * self.loss_scale
+        # if self.loss_scale != 1.0:
+        #     loss = loss * self.loss_scale
 
         return loss
 
