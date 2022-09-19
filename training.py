@@ -60,11 +60,11 @@ class TrainManager:
         self._log_parameters_list()
         self.target_pad = TARGET_PAD
 
-        self.adversarial_loss = nn.BCELoss() # loss function for conditional gan
+        # self.loss = nn.BCELoss() # loss function for conditional gan
 
         # New Regression loss - depending on config
-        # self.loss = RegLoss(cfg = config,
-        #                     target_pad=self.target_pad)
+        self.loss = RegLoss(cfg = config,
+                            target_pad=self.target_pad)
 
         self.normalization = "batch"
 
@@ -123,7 +123,7 @@ class TrainManager:
         if self.use_cuda:
             self.generator.cuda()
             self.discriminator.cuda()
-            self.adversarial_loss.cuda()
+            self.loss.cuda()
 
         # initialize training statistics
         self.steps = 0
@@ -136,7 +136,6 @@ class TrainManager:
         # comparison function for scores
         self.is_best = lambda score: score < self.best_ckpt_score \
             if self.minimize_metric else score > self.best_ckpt_score
-
         ## Checkpoint restart
         # If continuing
         if model_continue:
@@ -362,7 +361,7 @@ class TrainManager:
                             eval_metric=self.eval_metric,
                             model=self.generator,
                             max_output_length=self.max_output_length,
-                            loss_function=self.adversarial_loss,
+                            loss_function=self.loss,
                             batch_type=self.eval_batch_type,
                             type="val",
                         )
@@ -400,6 +399,8 @@ class TrainManager:
 
                         # Display these sequences, in this index order
                         display = list(range(0, len(valid_hypotheses), int(np.ceil(len(valid_hypotheses) / 13.15))))
+                        self.logger.info(valid_hypotheses)
+                        self.logger.info(valid_references)
                         self.produce_validation_video(
                             output_joints=valid_hypotheses,
                             inputs=valid_inputs,
@@ -477,11 +478,6 @@ class TrainManager:
 
     # Produce the video of Phoenix MTC joints
     def produce_validation_video(self,output_joints, inputs, references, display, model_dir, type, steps="", file_paths=None):
-        
-        logging.basicConfig(level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[logging.FileHandler("debug.log"),logging.StreamHandler(sys.stdout)]
-        )
 
         # If not at test
         if type != "test":
@@ -512,13 +508,6 @@ class TrainManager:
 
             # Alter the dtw timing of the produced sequence, and collect the DTW score
             timing_hyp_seq, ref_seq_count, dtw_score = alter_DTW_timing(seq, ref_seq)
-
-            # Logging in a output skeleton in a new file
-            # for i in timing_hyp_seq:
-            #     f.write(np.array_str(i))
-            # f.write('\n')
-
-            # logging.info(timing_hyp_seq, np.array(timing_hyp_seq).shape)
 
             video_ext = "{}_{}.mp4".format(gloss_label, "{0:.2f}".format(float(dtw_score)).replace(".", "_"))
 
@@ -554,7 +543,12 @@ class TrainManager:
         self.logger.info(source_embedding.shape) # spoken language sequence
 
         # [5, 184, 151] -> [5, 184, 512]
-        real_data = batch.trg # batch.trg_input?
+        
+        # 1. 
+        # real_data batch.trg
+        
+        # 2.
+        real_data = batch.trg_input
         self.logger.info(real_data.shape) #ground-truth sign pose equence
         real_data = self._pad_along_axis(array=real_data, target_length=512, axis=2)
         real_data = torch.Tensor(real_data)
@@ -565,7 +559,15 @@ class TrainManager:
         self.logger.info(concatenated_real_data.shape)
 
         # 가짜 이미지 생성
+        
+        # 1.
         fake_data = self.generator.get_predicted_skel(batch=batch)
+        
+        # 2.
+        # fake_data, _ = self.generator.forward(
+        #     src=batch.src, trg_input=batch.trg_input,
+        #     src_mask=batch.src_mask, src_lengths=batch.src_lengths,
+        #     trg_mask=batch.trg_mask)
         fake_data = fake_data.detach().numpy()
         fake_data = self._pad_along_axis(array=fake_data, target_length=512, axis=2)
         fake_data = torch.Tensor(fake_data)
@@ -589,13 +591,15 @@ class TrainManager:
 
         # Loss for real data
         out_dis_real = self.discriminator(concatenated_real_data)
-        loss_real = self.adversarial_loss(out_dis_real, real_label)
+        loss_real = self.loss(out_dis_real, real_label)
+        self.logger.info(loss_real)
 
         # Loss for fake data
         out_dis_fake = self.discriminator(concatenated_fake_data)
-        loss_fake = self.adversarial_loss(out_dis_fake, fake_label)
+        loss_fake = self.loss(out_dis_fake, fake_label)
+        self.logger.info(loss_fake)
 
-        loss_dis = (loss_real + loss_fake).mean()
+        loss_dis = (loss_real + loss_fake)
         loss_dis.backward()
         self.optimizer_d.step()
 
@@ -604,13 +608,13 @@ class TrainManager:
         # ---------------------
         #  Train Generator
         # ---------------------
-        self.optimizer_g.zero_grad()
+        # self.optimizer_g.zero_grad()
 
         # Get loss from this batch
         batch_loss, noise = self.generator.get_loss_for_batch(
-                                    batch=batch, loss_function=self.adversarial_loss, 
+                                    batch=batch, loss_function=self.loss, 
                                     label=real_label, discriminator=self.discriminator)
-
+        
         # normalize batch loss
         if self.normalization == "batch":
             normalizer = batch.nseqs
@@ -622,10 +626,14 @@ class TrainManager:
         norm_batch_loss = batch_loss / normalizer
         # division needed since loss.backward sums the gradients until updated
         norm_batch_multiply = norm_batch_loss / self.batch_multiplier
-
+        self.logger.info(norm_batch_multiply)
+        
+        
         # 3단계: 생성기 훈련
         # compute gradients
-        norm_batch_multiply.backward()
+        
+        # norm_batch_multiply.backward()
+        # self.optimizer_g.step()
 
         if self.clip_grad_fun is not None:
             # clip gradients (in-place)
@@ -633,8 +641,10 @@ class TrainManager:
 
         if update:
             # make gradient step
+            norm_batch_multiply.backward()
+            
             self.optimizer_g.step()
-            # self.optimizer_g.zero_grad()
+            self.optimizer_g.zero_grad()
 
             # increment step counter
             self.steps += 1
