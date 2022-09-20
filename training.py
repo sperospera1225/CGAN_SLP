@@ -399,8 +399,8 @@ class TrainManager:
 
                         # Display these sequences, in this index order
                         display = list(range(0, len(valid_hypotheses), int(np.ceil(len(valid_hypotheses) / 13.15))))
-                        self.logger.info(valid_hypotheses)
-                        self.logger.info(valid_references)
+                        # self.logger.info(valid_hypotheses)
+                        # self.logger.info(valid_references)
                         self.produce_validation_video(
                             output_joints=valid_hypotheses,
                             inputs=valid_inputs,
@@ -478,7 +478,7 @@ class TrainManager:
 
     # Produce the video of Phoenix MTC joints
     def produce_validation_video(self,output_joints, inputs, references, display, model_dir, type, steps="", file_paths=None):
-
+        print('video has been created!!!')
         # If not at test
         if type != "test":
             dir_name = model_dir + "/videos/Step_{}/".format(steps)
@@ -508,14 +508,13 @@ class TrainManager:
 
             # Alter the dtw timing of the produced sequence, and collect the DTW score
             timing_hyp_seq, ref_seq_count, dtw_score = alter_DTW_timing(seq, ref_seq)
-
+            # print(timing_hyp_seq)
             video_ext = "{}_{}.mp4".format(gloss_label, "{0:.2f}".format(float(dtw_score)).replace(".", "_"))
 
             if file_paths is not None:
                 sequence_ID = file_paths[i]
             else:
                 sequence_ID = None
-
             # Plot this sequences video
             if "<" not in video_ext:
                 plot_video(joints=timing_hyp_seq,
@@ -539,6 +538,15 @@ class TrainManager:
     # Train the batch
     def _train_batch(self, batch: Batch, update: bool = True) -> Tensor:
 
+                
+        # normalize batch loss
+        if self.normalization == "batch":
+            normalizer = batch.nseqs
+        elif self.normalization == "tokens":
+            normalizer = batch.ntokens
+        else:
+            raise NotImplementedError("Only normalize by 'batch' or 'tokens'")
+        
         source_embedding = self.generator.src_embed(batch.src)
         self.logger.info(source_embedding.shape) # spoken language sequence
 
@@ -584,6 +592,8 @@ class TrainManager:
             # real_label = real_label.ravel()
             # fake_label = fake_label.ravel()
         
+        # self.adversarial_loss = nn.BCELoss()
+        
         # ---------------------
         #  Train Discriminator
         # ---------------------
@@ -592,16 +602,19 @@ class TrainManager:
         # Loss for real data
         out_dis_real = self.discriminator(concatenated_real_data)
         loss_real = self.loss(out_dis_real, real_label)
+        self.logger.info(out_dis_real)
         self.logger.info(loss_real)
 
         # Loss for fake data
         out_dis_fake = self.discriminator(concatenated_fake_data)
         loss_fake = self.loss(out_dis_fake, fake_label)
+        self.logger.info(out_dis_fake)
         self.logger.info(loss_fake)
 
-        loss_dis = (loss_real + loss_fake)
-        loss_dis.backward()
-        self.optimizer_d.step()
+        loss_dis = (loss_real + loss_fake) / normalizer*2
+        # loss_dis_multiply = loss_dis / self.batch_multiplier
+        # loss_dis_multiply.backward()
+        # self.optimizer_d.step()
 
         # self.logger.info(batch.trg)
         # self.logger.info(batch.trg_input)
@@ -614,25 +627,18 @@ class TrainManager:
         batch_loss, noise = self.generator.get_loss_for_batch(
                                     batch=batch, loss_function=self.loss, 
                                     label=real_label, discriminator=self.discriminator)
-        
-        # normalize batch loss
-        if self.normalization == "batch":
-            normalizer = batch.nseqs
-        elif self.normalization == "tokens":
-            normalizer = batch.ntokens
-        else:
-            raise NotImplementedError("Only normalize by 'batch' or 'tokens'")
 
-        norm_batch_loss = batch_loss / normalizer
+
+        norm_batch_loss = (batch_loss / normalizer) 
         # division needed since loss.backward sums the gradients until updated
-        norm_batch_multiply = norm_batch_loss / self.batch_multiplier
+        norm_batch_multiply = norm_batch_loss / self.batch_multiplier + loss_dis
         self.logger.info(norm_batch_multiply)
         
         
         # 3단계: 생성기 훈련
         # compute gradients
         
-        # norm_batch_multiply.backward()
+        norm_batch_multiply.backward()
         # self.optimizer_g.step()
 
         if self.clip_grad_fun is not None:
@@ -641,8 +647,7 @@ class TrainManager:
 
         if update:
             # make gradient step
-            norm_batch_multiply.backward()
-            
+            self.optimizer_d.step()
             self.optimizer_g.step()
             self.optimizer_g.zero_grad()
 

@@ -35,7 +35,6 @@ def plot_video(joints,
 
     for (j, frame_joints) in enumerate(joints):
         
-        # logger.info(frame_joints)
         # Reached padding
         if PAD_TOKEN in frame_joints:
             continue
@@ -45,10 +44,12 @@ def plot_video(joints,
 
         # Cut off the percent_tok, multiply by 3 to restore joint size
         # TODO - Remove the *3 if the joints weren't divided by 3 in data creation
+        # print(frame_joints,'##############')
         frame_joints = frame_joints[:-1] * 3
-
+        # print(frame_joints, '@@@@@@@@@@@@@@@')
         # Reduce the frame joints down to 2D for visualisation - Frame joints 2d shape is (48,2)
         frame_joints_2d = np.reshape(frame_joints, (50, 3))[:, :2]
+        # print(frame_joints_2d, '----------------')
         # Draw the frame given 2D joints
         draw_frame_2D(frame, frame_joints_2d)
 
