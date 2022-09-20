@@ -243,15 +243,13 @@ class Generator(nn.Module):
             src_mask=batch.src_mask, src_lengths=batch.src_lengths,
             trg_mask=batch.trg_mask)
         
-        skel_out = torch.nn.functional.pad(skel_out, (0, 361), "constant", 0)
-        print(skel_out.shape,'@@@@@@@@@@@@@@@@@@@@@@@@@@')
-        source_embedding = self.src_embed(batch.src)
-        concatenated_data = torch.cat([skel_out, source_embedding], dim=1)
-        out_dis = discriminator.forward(concatenated_data)
-        # out_dis = discriminator(concatenated_data)
+        # skel_out = torch.nn.functional.pad(skel_out, (0, 361), "constant", 0) # [5,184,512]
+        # source_embedding = self.src_embed(batch.src)
+        # concatenated_data = torch.cat([skel_out, source_embedding], dim=1)
+        # out_dis = discriminator.forward(concatenated_data)
 
         # compute batch loss using skel_out and the batch target
-        batch_loss = loss_function(out_dis, label)
+        batch_loss = loss_function(skel_out, batch.trg)
         
         # If gaussian noise, find the noise for the next epoch
         if self.gaussian_noise:
@@ -298,7 +296,7 @@ class Generator(nn.Module):
                 decoder=self.decoder,
                 trg_input=batch.trg_input,
                 model=self)
-
+        # print(stacked_output)
         return stacked_output, stacked_attention_scores
 
     def __repr__(self) -> str:
