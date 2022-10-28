@@ -5,15 +5,6 @@ The base code refers to the Source code for "Progressive Transformers for End-to
 <img width="1267" alt="image" src="https://user-images.githubusercontent.com/67995592/198539967-f1fd513b-743a-462b-8c15-1438646429dd.png">
 
 
-
-#
-
-# Progressive Transformers for End-to-End Sign Language Production
-
-Source code for "Progressive Transformers for End-to-End Sign Language Production" (Ben Saunders, Necati Cihan Camgoz, Richard Bowden - ECCV 2020) 
-
-Conference video available at https://twitter.com/BenMSaunders/status/1336638886198521857
-
 # Usage
 
 Install required packages using the requirements.txt file.
